@@ -42,6 +42,7 @@
 #include "appleseedmaya/exporters/arealightexporter.h"
 #include "appleseedmaya/exporters/cameraexporter.h"
 #include "appleseedmaya/exporters/envlightexporter.h"
+#include "appleseedmaya/exporters/layeredtextureexporter.h"
 #include "appleseedmaya/exporters/lightexporter.h"
 #include "appleseedmaya/exporters/meshexporter.h"
 #include "appleseedmaya/exporters/place3dtextureexporter.h"
@@ -91,6 +92,7 @@ MStatus NodeExporterFactory::initialize(const MString& pluginPath)
     XGenExporter::registerExporter();
 #endif
     ShadingNodeExporter::registerExporters();
+    LayeredTextureExporter::registerExporter();
     Place3dTextureExporter::registerExporter();
     RampExporter::registerExporter();
 
