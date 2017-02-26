@@ -56,6 +56,8 @@ set (appleseed_maya_sources
     exporters/exporterfactory.h
     exporters/instanceexporter.cpp
     exporters/instanceexporter.h
+    exporters/layeredshaderexporter.cpp
+    exporters/layeredshaderexporter.h
     exporters/lightexporter.cpp
     exporters/lightexporter.h
     exporters/meshexporter.cpp
