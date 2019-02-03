@@ -126,15 +126,16 @@ def register():
 
     # Hypershade callbacks
     asHypershadeCallbacks = [
-        ("hyperShadePanelBuildCreateMenu",          hyperShadePanelBuildCreateMenuCallback),
-        ("hyperShadePanelBuildCreateSubMenu",       hyperShadePanelBuildCreateSubMenuCallback),
-        ("hyperShadePanelPluginChange",             hyperShadePanelPluginChangeCallback),
-        ("createRenderNodePluginChange",            createRenderNodePluginChangeCallback),
-        ("createRenderNodeSelectNodeCategories",    createRenderNodeSelectNodeCategoriesCallback),
-        ("renderNodeClassification",                renderNodeClassificationCallback),
-        ("createRenderNodeCommand",                 createRenderNodeCommandCallback),
-        ("nodeCanBeUsedAsMaterial",                 nodeCanBeUsedAsMaterialCallback),
-        ("buildRenderNodeTreeListerContent",        buildRenderNodeTreeListerContentCallback)
+        ("hyperShadePanelBuildCreateMenu",                      hyperShadePanelBuildCreateMenuCallback),
+        ("hyperShadePanelBuildCreateSubMenu",                   hyperShadePanelBuildCreateSubMenuCallback),
+        ("createRenderNodeSelectNodeCategories",                createRenderNodeSelectNodeCategoriesCallback),
+        ("renderNodeClassification",                            renderNodeClassificationCallback),
+        ("buildRenderNodeTreeListerContent",                    buildRenderNodeTreeListerContentCallback),
+        ("createRenderNodePluginChange",                        createRenderNodePluginChangeCallback),
+        ("provideClassificationStringsForFilteredTreeLister",   provideClassificationStringsForFilteredTreeListerCallback),
+        ("nodeCanBeUsedAsMaterial",                             nodeCanBeUsedAsMaterialCallback),
+        ("createRenderNodeCommand",                             createRenderNodeCommandCallback),
+        ("hyperShadePanelPluginChange",                         hyperShadePanelPluginChangeCallback),
     ]
     for h, c in asHypershadeCallbacks:
         logger.debug("Adding {0} callback.".format(h))

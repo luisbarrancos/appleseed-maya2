@@ -43,19 +43,6 @@ def hyperShadePanelBuildCreateSubMenuCallback():
     return "rendernode/appleseed"
 
 
-def hyperShadePanelPluginChangeCallback(classification, changeType):
-    if 'rendernode/appleseed' in classification:
-        return 1
-    else:
-        return 0
-
-def createRenderNodePluginChangeCallback(classification):
-    if 'rendernode/appleseed' in classification:
-        return 1
-    else:
-        return 0
-
-
 def createRenderNodeSelectNodeCategoriesCallback(flag, treeLister):
     if flag == "allWithAppleseedUp":
         mc.treeLister(treeLister, edit=True, selectPath="appleseed")
@@ -63,6 +50,105 @@ def createRenderNodeSelectNodeCategoriesCallback(flag, treeLister):
 
 def renderNodeClassificationCallback():
     return "rendernode/appleseed"
+
+
+def buildRenderNodeTreeListerContentCallback(tl, postCommand, filterString):
+    melCmd = 'addToRenderNodeTreeLister("{0}", "{1}", "{2}", "{3}", "{4}", "{5}");'.format(
+        tl,
+        postCommand,
+        "appleseed/Surface",
+        "rendernode/appleseed/surface",
+        "-asShader",
+        ""
+    )
+    logger.debug("buildRenderNodeTreeListerContentCallback: mel = %s" % melCmd)
+    mel.eval(melCmd)
+
+    melCmd = 'addToRenderNodeTreeLister("{0}", "{1}", "{2}", "{3}", "{4}", "{5}");'.format(
+        tl,
+        postCommand,
+        "appleseed/Volume",
+        "rendernode/appleseed/volume",
+        "-asShader",
+        ""
+    )
+    logger.debug("buildRenderNodeTreeListerContentCallback: mel = %s" % melCmd)
+    mel.eval(melCmd)
+
+    melCmd = 'addToRenderNodeTreeLister("{0}", "{1}", "{2}", "{3}", "{4}", "{5}");'.format(
+        tl,
+        postCommand,
+        "appleseed/Displacement",
+        "rendernode/appleseed/displacement",
+        "-asShader",
+        ""
+    )
+    logger.debug("buildRenderNodeTreeListerContentCallback: mel = %s" % melCmd)
+    mel.eval(melCmd)
+
+    melCmd = 'addToRenderNodeTreeLister("{0}", "{1}", "{2}", "{3}", "{4}", "{5}");'.format(
+        tl,
+        postCommand,
+        "appleseed/2D Textures",
+        "rendernode/appleseed/texture/2d",
+        "-asTexture",
+        ""
+    )
+    logger.debug("buildRenderNodeTreeListerContentCallback: mel = %s" % melCmd)
+    mel.eval(melCmd)
+
+    melCmd = 'addToRenderNodeTreeLister("{0}", "{1}", "{2}", "{3}", "{4}", "{5}");'.format(
+        tl,
+        postCommand,
+        "appleseed/3D Textures",
+        "rendernode/appleseed/texture/3d",
+        "-asTexture",
+        ""
+    )
+    logger.debug("buildRenderNodeTreeListerContentCallback: mel = %s" % melCmd)
+    mel.eval(melCmd)
+
+    melCmd = 'addToRenderNodeTreeLister("{0}", "{1}", "{2}", "{3}", "{4}", "{5}");'.format(
+        tl,
+        postCommand,
+        "appleseed/Environment Textures",
+        "rendernode/appleseed/texture/environment",
+        "-asTexture",
+        ""
+    )
+    logger.debug("buildRenderNodeTreeListerContentCallback: mel = %s" % melCmd)
+    mel.eval(melCmd)
+
+    melCmd = 'addToRenderNodeTreeLister("{0}", "{1}", "{2}", "{3}", "{4}", "{5}");'.format(
+        tl,
+        postCommand,
+        "appleseed/Utilities",
+        "rendernode/appleseed/utility",
+        "-asUtility",
+        ""
+    )
+    logger.debug("buildRenderNodeTreeListerContentCallback: mel = %s" % melCmd)
+    mel.eval(melCmd)
+
+
+def createRenderNodePluginChangeCallback(classification):
+    return classification.startswith("rendernode/appleseed")
+
+
+def provideClassificationStringsForFilteredTreeListerCallback(classification):
+    return "rendernode/appleseed/shader/surface"
+
+
+def nodeCanBeUsedAsMaterialCallback(nodeId, nodeOwner):
+    logger.debug((
+        "nodeCanBeUsedAsMaterialCallback called: "
+        "nodeId = {0}, nodeOwner = {1}").format(nodeId, nodeOwner)
+    )
+
+    if nodeOwner == 'appleseedMaya':
+        return 1
+    else:
+        return 0
 
 
 def createAsRenderNode(nodeType=None, postCommand=None):
@@ -153,94 +239,15 @@ def createRenderNodeCommandCallback(postCommand, nodeType):
             return "string $cmd = \"{0}\"; python($cmd);".format(buildNodeCmd)
 
 
-def nodeCanBeUsedAsMaterialCallback(nodeId, nodeOwner):
-    logger.debug((
-        "nodeCanBeUsedAsMaterialCallback called: "
-        "nodeId = {0}, nodeOwner = {1}").format(nodeId, nodeOwner)
-    )
-
-    if nodeOwner == 'appleseedMaya':
+def hyperShadePanelPluginChangeCallback(classification, changeType):
+    if 'rendernode/appleseed' in classification:
         return 1
     else:
         return 0
 
 
-def buildRenderNodeTreeListerContentCallback(tl, postCommand, filterString):
-    melCmd = 'addToRenderNodeTreeLister("{0}", "{1}", "{2}", "{3}", "{4}", "{5}");'.format(
-        tl,
-        postCommand,
-        "appleseed/Surface",
-        "rendernode/appleseed/surface",
-        "-asShader",
-        ""
-    )
-    logger.debug("buildRenderNodeTreeListerContentCallback: mel = %s" % melCmd)
-    mel.eval(melCmd)
 
-    melCmd = 'addToRenderNodeTreeLister("{0}", "{1}", "{2}", "{3}", "{4}", "{5}");'.format(
-        tl,
-        postCommand,
-        "appleseed/Volume",
-        "rendernode/appleseed/volume",
-        "-asShader",
-        ""
-    )
-    logger.debug("buildRenderNodeTreeListerContentCallback: mel = %s" % melCmd)
-    mel.eval(melCmd)
 
-    melCmd = 'addToRenderNodeTreeLister("{0}", "{1}", "{2}", "{3}", "{4}", "{5}");'.format(
-        tl,
-        postCommand,
-        "appleseed/Displacement",
-        "rendernode/appleseed/displacement",
-        "-asShader",
-        ""
-    )
-    logger.debug("buildRenderNodeTreeListerContentCallback: mel = %s" % melCmd)
-    mel.eval(melCmd)
 
-    melCmd = 'addToRenderNodeTreeLister("{0}", "{1}", "{2}", "{3}", "{4}", "{5}");'.format(
-        tl,
-        postCommand,
-        "appleseed/2D Textures",
-        "rendernode/appleseed/texture/2d",
-        "-asTexture",
-        ""
-    )
-    logger.debug("buildRenderNodeTreeListerContentCallback: mel = %s" % melCmd)
-    mel.eval(melCmd)
-
-    melCmd = 'addToRenderNodeTreeLister("{0}", "{1}", "{2}", "{3}", "{4}", "{5}");'.format(
-        tl,
-        postCommand,
-        "appleseed/3D Textures",
-        "rendernode/appleseed/texture/3d",
-        "-asTexture",
-        ""
-    )
-    logger.debug("buildRenderNodeTreeListerContentCallback: mel = %s" % melCmd)
-    mel.eval(melCmd)
-
-    melCmd = 'addToRenderNodeTreeLister("{0}", "{1}", "{2}", "{3}", "{4}", "{5}");'.format(
-        tl,
-        postCommand,
-        "appleseed/Environment Textures",
-        "rendernode/appleseed/texture/environment",
-        "-asTexture",
-        ""
-    )
-    logger.debug("buildRenderNodeTreeListerContentCallback: mel = %s" % melCmd)
-    mel.eval(melCmd)
-
-    melCmd = 'addToRenderNodeTreeLister("{0}", "{1}", "{2}", "{3}", "{4}", "{5}");'.format(
-        tl,
-        postCommand,
-        "appleseed/Utilities",
-        "rendernode/appleseed/utility",
-        "-asUtility",
-        ""
-    )
-    logger.debug("buildRenderNodeTreeListerContentCallback: mel = %s" % melCmd)
-    mel.eval(melCmd)
 
 
