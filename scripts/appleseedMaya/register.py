@@ -126,15 +126,15 @@ def register():
 
     # Hypershade callbacks
     asHypershadeCallbacks = [
-        ("hyperShadePanelBuildCreateMenu", hyperShadePanelBuildCreateMenuCallback),
-        ("hyperShadePanelBuildCreateSubMenu", hyperShadePanelBuildCreateSubMenuCallback),
-        ("hyperShadePanelPluginChange", hyperShadePanelPluginChangeCallback),
-        ("createRenderNodeSelectNodeCategories", createRenderNodeSelectNodeCategoriesCallback),
-        ("createRenderNodePluginChange", createRenderNodePluginChangeCallback),
-        ("renderNodeClassification", renderNodeClassificationCallback),
-        ("createRenderNodeCommand", createRenderNodeCallback),
-        ("nodeCanBeUsedAsMaterial", nodeCanBeUsedAsMaterialCallback),
-        ("buildRenderNodeTreeListerContent", buildRenderNodeTreeListerContentCallback)
+        ("hyperShadePanelBuildCreateMenu",          hyperShadePanelBuildCreateMenuCallback),
+        ("hyperShadePanelBuildCreateSubMenu",       hyperShadePanelBuildCreateSubMenuCallback),
+        ("hyperShadePanelPluginChange",             hyperShadePanelPluginChangeCallback),
+        ("createRenderNodePluginChange",            createRenderNodePluginChangeCallback),
+        ("createRenderNodeSelectNodeCategories",    createRenderNodeSelectNodeCategoriesCallback),
+        ("renderNodeClassification",                renderNodeClassificationCallback),
+        ("createRenderNodeCommand",                 createRenderNodeCommandCallback),
+        ("nodeCanBeUsedAsMaterial",                 nodeCanBeUsedAsMaterialCallback),
+        ("buildRenderNodeTreeListerContent",        buildRenderNodeTreeListerContentCallback)
     ]
     for h, c in asHypershadeCallbacks:
         logger.debug("Adding {0} callback.".format(h))

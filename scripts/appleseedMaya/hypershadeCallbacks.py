@@ -40,26 +40,25 @@ def hyperShadePanelBuildCreateMenuCallback():
 
 
 def hyperShadePanelBuildCreateSubMenuCallback():
-    return "rendernode/appleseed/surface"
+    return "rendernode/appleseed"
 
 
 def hyperShadePanelPluginChangeCallback(classification, changeType):
     if 'rendernode/appleseed' in classification:
         return 1
+    else:
+        return 0
 
-    return 0
+def createRenderNodePluginChangeCallback(classification):
+    if 'rendernode/appleseed' in classification:
+        return 1
+    else:
+        return 0
 
 
 def createRenderNodeSelectNodeCategoriesCallback(flag, treeLister):
     if flag == "allWithAppleseedUp":
         mc.treeLister(treeLister, edit=True, selectPath="appleseed")
-
-
-def createRenderNodePluginChangeCallback(classification):
-    if 'rendernode/appleseed' in classification:
-        return 1
-
-    return 0
 
 
 def renderNodeClassificationCallback():
@@ -111,7 +110,7 @@ def createAsRenderNode(nodeType=None, postCommand=None):
     return ""
 
 
-def createRenderNodeCallback(postCommand, nodeType):
+def createRenderNodeCommandCallback(postCommand, nodeType):
     #logger.debug("createRenderNodeCallback called!")
 
     for c in mc.getClassification(nodeType):
@@ -121,6 +120,18 @@ def createRenderNodeCallback(postCommand, nodeType):
                 "appleseedMaya.hypershadeCallbacks.createAsRenderNode"
                 "(nodeType=\\\"{0}\\\", postCommand='{1}')").format(nodeType, postCommand)
             return "string $cmd = \"{0}\"; python($cmd);".format(buildNodeCmd)
+
+
+def nodeCanBeUsedAsMaterialCallback(nodeId, nodeOwner):
+    logger.debug((
+        "nodeCanBeUsedAsMaterialCallback called: "
+        "nodeId = {0}, nodeOwner = {1}").format(nodeId, nodeOwner)
+    )
+
+    if nodeOwner == 'appleseedMaya':
+        return 1
+    else:
+        return 0
 
 
 def buildRenderNodeTreeListerContentCallback(tl, postCommand, filterString):
@@ -169,13 +180,3 @@ def buildRenderNodeTreeListerContentCallback(tl, postCommand, filterString):
     mel.eval(melCmd)
 
 
-def nodeCanBeUsedAsMaterialCallback(nodeId, nodeOwner):
-    logger.debug((
-        "nodeCanBeUsedAsMaterialCallback called: "
-        "nodeId = {0}, nodeOwner = {1}").format(nodeId, nodeOwner)
-    )
-
-    if nodeOwner == 'appleseedMaya':
-        return 1
-
-    return 0
