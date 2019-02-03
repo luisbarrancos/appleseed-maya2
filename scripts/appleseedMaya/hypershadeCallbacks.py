@@ -76,6 +76,7 @@ def createAsRenderNode(nodeType=None, postCommand=None):
     )
 
     for cl in classification:
+
         if "rendernode/appleseed/surface" in cl.lower():
             mat = mc.shadingNode(nodeType, asShader=True)
             shadingGroup = mc.sets(
@@ -85,19 +86,49 @@ def createAsRenderNode(nodeType=None, postCommand=None):
                 name=mat + "SG"
             )
             mc.connectAttr(mat + ".outColor", shadingGroup + ".surfaceShader")
-
             logger.debug("Created shading node {0} asShader".format(mat))
+
+        elif "rendernode/appleseed/volume" in cl.lower():
+            mat = mc.shadingNode(nodeType, asShader=True)
+            shadingGroup = mc.sets(
+                renderable=True,
+                noSurfaceShader=True,
+                empty=True,
+                name=mat + "SG"
+            )
+            mc.connectAttr(mat + ".outColor", shadingGroup + ".volumeShader")
+            logger.debug("Created shading node {0} asShader".format(mat))
+
+        elif "rendernode/appleseed/displacement" in cl.lower():
+            mat = mc.shadingNode(nodeType, asShader=True)
+            shadingGroup = mc.sets(
+                renderable=True,
+                noSurfaceShader=True,
+                empty=True,
+                name=mat + "SG"
+            )
+            mc.connectAttr(mat + ".displacement", shadingGroup + ".displacementShader")
+            logger.debug("Created shading node {0} asShader".format(mat))
+
         elif "rendernode/appleseed/texture/2d" in cl.lower():
             mat = mc.shadingNode(nodeType, asTexture=True)
             placeTex = mc.shadingNode("place2dTexture", asUtility=True)
             mc.connectAttr(placeTex + ".outUV", mat + ".uv")
             mc.connectAttr(placeTex + ".outUvFilterSize", mat + ".uvFilterSize")
             logger.debug("Created shading node {0} asTexture2D".format(mat))
+
         elif "rendernode/appleseed/texture/3d" in cl.lower():
             mat = mc.shadingNode(nodeType, asTexture=True)
             placeTex = mc.shadingNode("place3dTexture", asUtility=True)
             mc.connectAttr(placeTex + ".wim[0]", mat + ".placementMatrix")
             logger.debug("Created shading node {0} asTexture3D".format(mat))
+
+        elif "rendernode/appleseed/texture/environment" in cl.lower():
+            mat = mc.shadingNode(nodeType, asTexture=True)
+            placeTex = mc.shadingNode("place3dTexture", asUtility=True)
+            mc.connectAttr(placeTex + ".wim[0]", mat + ".placementMatrix")
+            logger.debug("Created shading node {0} environment".format(mat))
+
         else:
             mat = mc.shadingNode(nodeType, asUtility=True)
             logger.debug("Created shading node {0} asUtility".format(mat))
@@ -149,6 +180,28 @@ def buildRenderNodeTreeListerContentCallback(tl, postCommand, filterString):
     melCmd = 'addToRenderNodeTreeLister("{0}", "{1}", "{2}", "{3}", "{4}", "{5}");'.format(
         tl,
         postCommand,
+        "appleseed/Volume",
+        "rendernode/appleseed/volume",
+        "-asShader",
+        ""
+    )
+    logger.debug("buildRenderNodeTreeListerContentCallback: mel = %s" % melCmd)
+    mel.eval(melCmd)
+
+    melCmd = 'addToRenderNodeTreeLister("{0}", "{1}", "{2}", "{3}", "{4}", "{5}");'.format(
+        tl,
+        postCommand,
+        "appleseed/Displacement",
+        "rendernode/appleseed/displacement",
+        "-asShader",
+        ""
+    )
+    logger.debug("buildRenderNodeTreeListerContentCallback: mel = %s" % melCmd)
+    mel.eval(melCmd)
+
+    melCmd = 'addToRenderNodeTreeLister("{0}", "{1}", "{2}", "{3}", "{4}", "{5}");'.format(
+        tl,
+        postCommand,
         "appleseed/2D Textures",
         "rendernode/appleseed/texture/2d",
         "-asTexture",
@@ -162,6 +215,17 @@ def buildRenderNodeTreeListerContentCallback(tl, postCommand, filterString):
         postCommand,
         "appleseed/3D Textures",
         "rendernode/appleseed/texture/3d",
+        "-asTexture",
+        ""
+    )
+    logger.debug("buildRenderNodeTreeListerContentCallback: mel = %s" % melCmd)
+    mel.eval(melCmd)
+
+    melCmd = 'addToRenderNodeTreeLister("{0}", "{1}", "{2}", "{3}", "{4}", "{5}");'.format(
+        tl,
+        postCommand,
+        "appleseed/Environment Textures",
+        "rendernode/appleseed/texture/environment",
         "-asTexture",
         ""
     )
