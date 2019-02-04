@@ -105,12 +105,21 @@ class AEappleseedNodeTemplate(pm.ui.AETemplate):
 
         elif self.thisNode.type() == 'mesh':
             self.beginLayout('appleseed', collapse=1)
+
             self.__buildVisibilitySection()
+
+            self.beginLayout('Alpha Map', collapse=1)
             self.callCustom(
                 self.meshAlphaMapNew, self.meshAlphaMapUpdate, 'asAlphaMap')
-            self.addControl('asMediumPriority', label='Medium Priority')
-            self.addControl('asIsPhotonTarget', label='Photon Target')
+            self.endLayout()
+
+            self.beginLayout('Rendering', collapse=1)
+            self.addControl('asMediumPriority', label='IOR Medium Priority')
+            self.addSeparator()
             self.addControl('asSubsurfaceSet', label='SSS Set')
+            self.addSeparator()
+            self.addControl('asIsPhotonTarget', label='SPPM Photon Target')
+            self.endLayout()
 
             self.beginLayout('Export', collapse=1)
             self.addControl('asExportUVs', label='Export UVs')
@@ -124,6 +133,14 @@ class AEappleseedNodeTemplate(pm.ui.AETemplate):
             self.beginLayout('appleseed', collapse=1)
             self.addControl('asDoubleSided', label='Double Sided')
             self.addControl('asShadingSamples', label='Shading Samples')
+            self.endLayout()
+
+        elif self.thisNode.type() in {'anisotropic', 'blinn', 'lambert', 'phong', 'phongE'}:
+            self.beginLayout('appleseed', collapse=1)
+            self.addControl('asEnableMatteOpacity', label='Enable Matte Opacity')
+            self.addSeparator()
+            self.addControl('asMatteOpacity', label='Matte Opacity')
+            self.addControl('asMatteOpacityColor', label='Matte Opacity Color')
             self.endLayout()
 
 

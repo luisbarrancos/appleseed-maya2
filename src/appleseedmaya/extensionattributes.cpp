@@ -304,6 +304,54 @@ namespace
         modifier.doIt();
     }
 
+    void addMayaSurfaceExtensionAttributes()
+    {
+        for (const MString& nodeName : {"anisotropic", "blinn", "lambert", "phong", "phongE"})
+        {
+            MNodeClass nodeClass{nodeName};
+
+            MDGModifier modifier;
+            MStatus status;
+
+            MFnNumericAttribute numAttrFn;
+            MObject attr = createNumericAttribute<bool>(
+                numAttrFn,
+                "asEnableMatteOpacity",
+                "asEnableMatteOpacity",
+                MFnNumericData::kBoolean,
+                false,
+                status);
+            numAttrFn.setKeyable(false);
+            AttributeUtils::makeInput(numAttrFn);
+            modifier.addExtensionAttribute(nodeClass, attr);
+
+            attr = createNumericAttribute<float>(
+                numAttrFn,
+                "asMatteOpacity",
+                "asMatteOpacity",
+                MFnNumericData::kFloat,
+                0.0f,
+                status);
+            numAttrFn.setMin(0.0);
+            numAttrFn.setMax(1.0);
+            AttributeUtils::makeInput(numAttrFn);
+            modifier.addExtensionAttribute(nodeClass, attr);
+
+            attr = numAttrFn.createColor(
+                       "asMatteOpacityColor",
+                       "asMatteOpacityColor",
+                       &status);
+
+            numAttrFn.setUsedAsColor(true);
+            numAttrFn.setDefault(0.0, 0.0, 0.0);
+
+            AttributeUtils::makeInput(numAttrFn);
+            modifier.addExtensionAttribute(nodeClass, attr);
+
+            modifier.doIt();
+        }
+    }
+
     void addShadingEngineExtensionAttrs()
     {
         MNodeClass nodeClass("shadingEngine");
@@ -389,6 +437,7 @@ MStatus addExtensionAttributes()
     addMeshExtensionAttributes();
     addAreaLightExtensionAttributes();
     addBump2dExtensionAttributes();
+    addMayaSurfaceExtensionAttributes();
     addShadingEngineExtensionAttrs();
     addCameraExtensionAttrs();
     return MS::kSuccess;
