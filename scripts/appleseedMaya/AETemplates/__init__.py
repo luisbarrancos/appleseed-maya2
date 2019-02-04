@@ -83,6 +83,7 @@ class AEappleseedNodeTemplate(pm.ui.AETemplate):
             self.beginLayout('appleseed', collapse=1)
             self.addControl('asIntensityScale', label='Intensity Scale')
             self.addControl('asExposure', label='Exposure')
+            self.addSeparator()
             self.addControl('asNormalize', label='Normalize')
             self.__buildVisibilitySection()
             self.endLayout()
@@ -132,6 +133,7 @@ class AEappleseedNodeTemplate(pm.ui.AETemplate):
         elif self.thisNode.type() == 'shadingEngine':
             self.beginLayout('appleseed', collapse=1)
             self.addControl('asDoubleSided', label='Double Sided')
+            self.addSeparator()
             self.addControl('asShadingSamples', label='Shading Samples')
             self.endLayout()
 

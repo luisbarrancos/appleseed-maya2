@@ -335,6 +335,9 @@ namespace
                 status);
             numAttrFn.setMin(0.0);
             numAttrFn.setMax(1.0);
+            numAttrFn.setSoftMin(0.0);
+            numAttrFn.setSoftMax(1.0);
+            numAttrFn.setNiceNameOverride("Matte Opacity");
             AttributeUtils::makeInput(numAttrFn);
             modifier.addExtensionAttribute(nodeClass, attr);
 
