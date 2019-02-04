@@ -135,7 +135,7 @@ class AEappleseedNodeTemplate(pm.ui.AETemplate):
             self.addControl('asShadingSamples', label='Shading Samples')
             self.endLayout()
 
-        elif self.thisNode.type() in {'anisotropic', 'blinn', 'lambert', 'phong', 'phongE'}:
+        elif self.thisNode.type() in {'lambert', 'anisotropic', 'blinn', 'phong', 'phongE'}:
             self.beginLayout('appleseed', collapse=1)
             self.addControl('asEnableMatteOpacity', label='Enable Matte Opacity')
             self.addSeparator()

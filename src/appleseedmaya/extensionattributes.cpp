@@ -307,7 +307,7 @@ namespace
 
     void addMayaSurfaceExtensionAttributes()
     {
-        for (const MString& nodeName : {"anisotropic", "blinn", "lambert", "phong", "phongE"})
+        for (MString nodeName : {"lambert", "anisotropic", "blinn", "phong", "phongE"})
         {
             MNodeClass nodeClass{nodeName};
 
