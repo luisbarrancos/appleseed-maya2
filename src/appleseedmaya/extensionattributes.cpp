@@ -44,6 +44,7 @@
 #include <maya/MFnStringData.h>
 #include <maya/MFnTypedAttribute.h>
 #include <maya/MNodeClass.h>
+#include <maya/MString.h>
 #include "appleseedmaya/_endmayaheaders.h"
 
 namespace
