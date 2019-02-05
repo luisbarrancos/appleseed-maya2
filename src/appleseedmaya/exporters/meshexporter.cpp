@@ -116,7 +116,7 @@ MeshExporter::~MeshExporter()
 {
     if (sessionMode() == AppleseedSession::ProgressiveRenderSession)
     {
-        if (m_objectAssembly.get() == 0)
+        if (m_objectAssembly.get() == nullptr)
             mainAssembly().objects().remove(m_mesh.get());
     }
 }

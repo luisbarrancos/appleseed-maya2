@@ -137,6 +137,12 @@ class AEappleseedNodeTemplate(pm.ui.AETemplate):
             self.addControl('asSmoothTangents', label='Smooth Tangents')
             self.endLayout()
 
+            self.beginLayout('Advanced', collapse=1)
+            self.addControl('asRayBiasMethod', label='Ray Bias Method')
+            self.addSeparator()
+            self.addControl('asRayBiasDistance', label='Ray Bias Distance')
+            self.endLayout()
+
             self.endLayout()
 
         elif self.thisNode.type() == 'shadingEngine':
