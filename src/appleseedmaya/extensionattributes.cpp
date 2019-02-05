@@ -158,6 +158,8 @@ namespace
             MFnNumericData::kInt,
             0,
             status);
+        numAttrFn.setMin(0);
+        numAttrFn.setSoftMax(10);
         AttributeUtils::makeInput(numAttrFn);
         modifier.addExtensionAttribute(nodeClass, attr);
 
@@ -203,6 +205,32 @@ namespace
             MFnNumericData::kBoolean,
             false,
             status);
+        AttributeUtils::makeInput(numAttrFn);
+        modifier.addExtensionAttribute(nodeClass, attr);
+
+        MFnEnumAttribute enumAttrFn;
+        attr = enumAttrFn.create(
+            "asRayBiasMethod",
+            "asRayBiasMethod",
+            0);
+        enumAttrFn.addField("None", 0);
+        enumAttrFn.addField("Normal", 1);
+        enumAttrFn.addField("Incoming Direction", 2);
+        enumAttrFn.addField("Outgoing Direction", 3);
+        enumAttrFn.setKeyable(false);
+        AttributeUtils::makeInput(enumAttrFn);
+        modifier.addExtensionAttribute(nodeClass, attr);
+
+        attr = createNumericAttribute<double>(
+            numAttrFn,
+            "asRayBiasDistance",
+            "asRayBiasDistance",
+            MFnNumericData::kDouble,
+            0.0,
+            status);
+        numAttrFn.setSoftMin(0.0);
+        numAttrFn.setSoftMax(1.0);
+        numAttrFn.setKeyable(true);
         AttributeUtils::makeInput(numAttrFn);
         modifier.addExtensionAttribute(nodeClass, attr);
 
@@ -254,30 +282,6 @@ namespace
         AttributeUtils::makeInput(numAttrFn);
         modifier.addExtensionAttribute(nodeClass, attr);
 
-        attr = createNumericAttribute<bool>(
-            numAttrFn,
-            "asCastIndirectLight",
-            "asCastIndirectLight",
-            MFnNumericData::kBoolean,
-            true,
-            status);
-        numAttrFn.setKeyable(false);
-        AttributeUtils::makeInput(numAttrFn);
-        modifier.addExtensionAttribute(nodeClass, attr);
-
-        attr = createNumericAttribute<float>(
-                   numAttrFn,
-                   "asImportanceMultiplier",
-                   "asImportanceMultiplier",
-                   MFnNumericData::kFloat,
-                   1.0f,
-                   status);
-        numAttrFn.setMin(0.0f);
-        numAttrFn.setSoftMax(10.0f);
-
-        AttributeUtils::makeInput(numAttrFn);
-        modifier.addExtensionAttribute(nodeClass, attr);
-
         addVisibilityExtensionAttributes(nodeClass, modifier);
         modifier.doIt();
     }
@@ -301,20 +305,6 @@ namespace
                 true,
                 status);
             numAttrFn.setKeyable(false);
-
-            AttributeUtils::makeInput(numAttrFn);
-            modifier.addExtensionAttribute(nodeClass, attr);
-
-            attr = createNumericAttribute<float>(
-                       numAttrFn,
-                       "asImportanceMultiplier",
-                       "asImportanceMultiplier",
-                       MFnNumericData::kFloat,
-                       1.0f,
-                       status);
-            numAttrFn.setMin(0.0f);
-            numAttrFn.setSoftMax(10.0f);
-
             AttributeUtils::makeInput(numAttrFn);
             modifier.addExtensionAttribute(nodeClass, attr);
 

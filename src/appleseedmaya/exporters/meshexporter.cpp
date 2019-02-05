@@ -44,15 +44,20 @@
 #include <maya/MFnMesh.h>
 #include <maya/MFnMeshData.h>
 #include <maya/MItDependencyGraph.h>
+#include <maya/MFnEnumAttribute.h>
 #include <maya/MItMeshPolygon.h>
 #include <maya/MMeshSmoothOptions.h>
 #include <maya/MPointArray.h>
+#include <maya/MString.h>
 #include "appleseedmaya/_endmayaheaders.h"
 
 // Boost headers.
 #include "boost/filesystem/convenience.hpp"
 #include "boost/filesystem/operations.hpp"
 #include "boost/filesystem/path.hpp"
+
+// Standard headers
+#include <array>
 
 namespace bfs = boost::filesystem;
 namespace asf = foundation;
@@ -436,6 +441,20 @@ void MeshExporter::meshAttributesToParams(renderer::ParamArray& params)
     bool isPhotonTarget = false;
     if (AttributeUtils::get(node(), "asIsPhotonTarget", isPhotonTarget))
         params.insert("photon_target", isPhotonTarget);
+
+    short rayBiasMethodIndex = 0; // MFnEnumAttr index is short
+
+    if (AttributeUtils::get(node(), "asRayBiasMethod", rayBiasMethodIndex))
+    {
+        const std::array<std::string, 4> biasMethods{
+            {"none", "normal", "incoming_direction", "outgoing_direction"}
+        };
+        params.insert("ray_bias_method", biasMethods.at(static_cast<size_t>(rayBiasMethodIndex)));
+    }
+
+    double rayBiasDistance = 0.0;
+    if (AttributeUtils::get(node(), "asRayBiasDistance", rayBiasDistance))
+        params.insert("ray_bias_distance", rayBiasDistance);
 }
 
 int MeshExporter::getSmoothLevel(MStatus* ReturnStatus) const

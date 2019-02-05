@@ -85,16 +85,13 @@ class AEappleseedNodeTemplate(pm.ui.AETemplate):
             self.addControl('asExposure', label='Exposure')
             self.addSeparator()
             self.addControl('asNormalize', label='Normalize')
-            self.addControl('asCastIndirectLight', label='Cast Indirect Light')
             self.addSeparator()
-            self.addControl('asImportanceMultiplier', label='Importance Multiplier')
             self.__buildVisibilitySection()
             self.endLayout()
 
         elif self.thisNode.type() in {'pointLight', 'spotLight', 'directionalLight'}:
             self.beginLayout('appleseed', collapse=1)
             self.addControl('asCastIndirectLight', label='Cast Indirect Light')
-            self.addControl('asImportanceMultiplier', label='Importance Multiplier')
             self.endLayout()
 
         elif self.thisNode.type() == 'bump2d':
