@@ -109,16 +109,6 @@ void AreaLightExporter::createEntities(
     params.insert("width", 2.0f);
     params.insert("height", 2.0f);
 
-    bool castIndirectLight = true;
-    AttributeUtils::get(node(), "asCastIndirectLight", castIndirectLight);
-
-    params.insert("cast_indirect_light", castIndirectLight);
-
-    float importanceMultiplier = 1.0f;
-    AttributeUtils::get(node(), "asImportanceMultiplier", importanceMultiplier);
-
-    params.insert("importance_multiplier", importanceMultiplier);
-
     if (sessionMode() == AppleseedSession::ExportSession)
         m_lightMesh.reset(asr::MeshObjectFactory().create(objectName.asChar(), params));
     else
