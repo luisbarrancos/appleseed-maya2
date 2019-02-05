@@ -91,6 +91,12 @@ class AEappleseedNodeTemplate(pm.ui.AETemplate):
             self.__buildVisibilitySection()
             self.endLayout()
 
+        elif self.thisNode.type() in {'pointLight', 'spotLight', 'directionalLight'}:
+            self.beginLayout('appleseed', collapse=1)
+            self.addControl('asCastIndirectLight', label='Cast Indirect Light')
+            self.addControl('asImportanceMultiplier', label='Importance Multiplier')
+            self.endLayout()
+
         elif self.thisNode.type() == 'bump2d':
             self.beginLayout('appleseed', collapse=1)
             self.addControl('asNormalMapMode', label='Map Mode')

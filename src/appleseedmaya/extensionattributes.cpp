@@ -250,6 +250,7 @@ namespace
             MFnNumericData::kBoolean,
             false,
             status);
+        numAttrFn.setKeyable(false);
         AttributeUtils::makeInput(numAttrFn);
         modifier.addExtensionAttribute(nodeClass, attr);
 
@@ -258,8 +259,9 @@ namespace
             "asCastIndirectLight",
             "asCastIndirectLight",
             MFnNumericData::kBoolean,
-            false,
+            true,
             status);
+        numAttrFn.setKeyable(false);
         AttributeUtils::makeInput(numAttrFn);
         modifier.addExtensionAttribute(nodeClass, attr);
 
@@ -278,6 +280,47 @@ namespace
 
         addVisibilityExtensionAttributes(nodeClass, modifier);
         modifier.doIt();
+    }
+
+    void addDeltaLightExtensionAttributes()
+    {
+        for (const MString& light : {"pointLight", "spotLight", "directionalLight"})
+        {
+            MNodeClass nodeClass(light);
+            MDGModifier modifier;
+
+            MStatus status;
+
+            MFnNumericAttribute numAttrFn;
+
+            MObject attr = createNumericAttribute<bool>(
+                numAttrFn,
+                "asCastIndirectLight",
+                "asCastIndirectLight",
+                MFnNumericData::kBoolean,
+                true,
+                status);
+            numAttrFn.setKeyable(false);
+
+            AttributeUtils::makeInput(numAttrFn);
+            modifier.addExtensionAttribute(nodeClass, attr);
+
+            attr = createNumericAttribute<float>(
+                       numAttrFn,
+                       "asImportanceMultiplier",
+                       "asImportanceMultiplier",
+                       MFnNumericData::kFloat,
+                       1.0f,
+                       status);
+            numAttrFn.setMin(0.0f);
+            numAttrFn.setSoftMax(10.0f);
+
+            AttributeUtils::makeInput(numAttrFn);
+            modifier.addExtensionAttribute(nodeClass, attr);
+
+            addVisibilityExtensionAttributes(nodeClass, modifier);
+            modifier.doIt();
+        }
     }
 
     void addBump2dExtensionAttributes()
@@ -416,6 +459,7 @@ MStatus addExtensionAttributes()
 {
     addMeshExtensionAttributes();
     addAreaLightExtensionAttributes();
+    addDeltaLightExtensionAttributes();
     addBump2dExtensionAttributes();
     addShadingEngineExtensionAttrs();
     addCameraExtensionAttrs();

@@ -128,17 +128,32 @@ void LightExporter::createEntities(
             asr::ColorEntityFactory::create(colorName.asChar(), params, values));
     }
 
+    auto extraControls = [&](asr::ParamArray& lightParams)
+    {
+        bool castIndirectLight = true;
+        AttributeUtils::get(node(), "asCastIndirectLight", castIndirectLight);
+        lightParams.insert("cast_indirect_light", castIndirectLight);
+
+        float importanceMultiplier = 1.0f;
+        AttributeUtils::get(node(), "asImportanceMultiplier", importanceMultiplier);
+        lightParams.insert("importance_multiplier", importanceMultiplier);
+    };
+
     if (depNodeFn.typeName() == "directionalLight")
     {
         lightFactory = lightFactories.lookup("directional_light");
         lightParams.insert("irradiance", colorName.asChar());
         lightParams.insert("irradiance_multiplier", intensity);
+
+        extraControls(lightParams);
     }
     else if (depNodeFn.typeName() == "pointLight")
     {
         lightFactory = lightFactories.lookup("point_light");
         lightParams.insert("intensity", colorName.asChar());
         lightParams.insert("intensity_multiplier", intensity);
+
+        extraControls(lightParams);
     }
     else if (depNodeFn.typeName() == "spotLight")
     {
@@ -154,6 +169,8 @@ void LightExporter::createEntities(
         AttributeUtils::get(node(), "penumbraAngle", penumbraAngle);
         const double outerAngle = coneAngle.asDegrees() + 2.0 * penumbraAngle.asDegrees();
         lightParams.insert("outer_angle", outerAngle);
+
+        extraControls(lightParams);
     }
     else
     {
