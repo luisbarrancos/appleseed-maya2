@@ -85,6 +85,9 @@ class AEappleseedNodeTemplate(pm.ui.AETemplate):
             self.addControl('asExposure', label='Exposure')
             self.addSeparator()
             self.addControl('asNormalize', label='Normalize')
+            self.addControl('asCastIndirectLight', label='Cast Indirect Light')
+            self.addSeparator()
+            self.addControl('asImportanceMultiplier', label='Importance Multiplier')
             self.__buildVisibilitySection()
             self.endLayout()
 
@@ -135,14 +138,6 @@ class AEappleseedNodeTemplate(pm.ui.AETemplate):
             self.addControl('asDoubleSided', label='Double Sided')
             self.addSeparator()
             self.addControl('asShadingSamples', label='Shading Samples')
-            self.endLayout()
-
-        elif self.thisNode.type() in {'lambert', 'anisotropic', 'blinn', 'phong', 'phongE'}:
-            self.beginLayout('appleseed', collapse=1)
-            self.addControl('asEnableMatteOpacity', label='Enable Matte Opacity')
-            self.addSeparator()
-            self.addControl('asMatteOpacity', label='Matte Opacity')
-            self.addControl('asMatteOpacityColor', label='Matte Opacity Color')
             self.endLayout()
 
 

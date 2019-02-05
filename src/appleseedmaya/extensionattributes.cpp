@@ -226,6 +226,8 @@ namespace
             MFnNumericData::kFloat,
             1.0f,
             status);
+        numAttrFn.setSoftMin(0.0f);
+        numAttrFn.setSoftMax(10.0f);
         AttributeUtils::makeInput(numAttrFn);
         modifier.addExtensionAttribute(nodeClass, attr);
 
@@ -236,6 +238,8 @@ namespace
             MFnNumericData::kFloat,
             0.0f,
             status);
+        numAttrFn.setSoftMin(0.0f);
+        numAttrFn.setSoftMax(16.0f);
         AttributeUtils::makeInput(numAttrFn);
         modifier.addExtensionAttribute(nodeClass, attr);
 
@@ -246,6 +250,29 @@ namespace
             MFnNumericData::kBoolean,
             false,
             status);
+        AttributeUtils::makeInput(numAttrFn);
+        modifier.addExtensionAttribute(nodeClass, attr);
+
+        attr = createNumericAttribute<bool>(
+            numAttrFn,
+            "asCastIndirectLight",
+            "asCastIndirectLight",
+            MFnNumericData::kBoolean,
+            false,
+            status);
+        AttributeUtils::makeInput(numAttrFn);
+        modifier.addExtensionAttribute(nodeClass, attr);
+
+        attr = createNumericAttribute<float>(
+                   numAttrFn,
+                   "asImportanceMultiplier",
+                   "asImportanceMultiplier",
+                   MFnNumericData::kFloat,
+                   1.0f,
+                   status);
+        numAttrFn.setMin(0.0f);
+        numAttrFn.setSoftMax(10.0f);
+
         AttributeUtils::makeInput(numAttrFn);
         modifier.addExtensionAttribute(nodeClass, attr);
 
@@ -303,57 +330,6 @@ namespace
         modifier.addExtensionAttribute(nodeClass, attr);
 
         modifier.doIt();
-    }
-
-    void addMayaSurfaceExtensionAttributes()
-    {
-        for (MString nodeName : {"lambert", "anisotropic", "blinn", "phong", "phongE"})
-        {
-            MNodeClass nodeClass{nodeName};
-
-            MDGModifier modifier;
-            MStatus status;
-
-            MFnNumericAttribute numAttrFn;
-            MObject attr = createNumericAttribute<bool>(
-                numAttrFn,
-                "asEnableMatteOpacity",
-                "asEnableMatteOpacity",
-                MFnNumericData::kBoolean,
-                false,
-                status);
-            numAttrFn.setKeyable(false);
-            AttributeUtils::makeInput(numAttrFn);
-            modifier.addExtensionAttribute(nodeClass, attr);
-
-            attr = createNumericAttribute<float>(
-                numAttrFn,
-                "asMatteOpacity",
-                "asMatteOpacity",
-                MFnNumericData::kFloat,
-                0.0f,
-                status);
-            numAttrFn.setMin(0.0);
-            numAttrFn.setMax(1.0);
-            numAttrFn.setSoftMin(0.0);
-            numAttrFn.setSoftMax(1.0);
-            numAttrFn.setNiceNameOverride("Matte Opacity");
-            AttributeUtils::makeInput(numAttrFn);
-            modifier.addExtensionAttribute(nodeClass, attr);
-
-            attr = numAttrFn.createColor(
-                       "asMatteOpacityColor",
-                       "asMatteOpacityColor",
-                       &status);
-
-            numAttrFn.setUsedAsColor(true);
-            numAttrFn.setDefault(0.0, 0.0, 0.0);
-
-            AttributeUtils::makeInput(numAttrFn);
-            modifier.addExtensionAttribute(nodeClass, attr);
-
-            modifier.doIt();
-        }
     }
 
     void addShadingEngineExtensionAttrs()
@@ -441,7 +417,6 @@ MStatus addExtensionAttributes()
     addMeshExtensionAttributes();
     addAreaLightExtensionAttributes();
     addBump2dExtensionAttributes();
-    addMayaSurfaceExtensionAttributes();
     addShadingEngineExtensionAttrs();
     addCameraExtensionAttrs();
     return MS::kSuccess;
