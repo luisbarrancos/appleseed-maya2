@@ -941,11 +941,13 @@ class AppleseedRenderGlobalsOutputTab(AppleseedRenderGlobalsTab):
 
                         enablePrefilter = mc.getAttr(
                             "appleseedRenderGlobals.prefilterSpikes")
+
                         self._addControl(
                             ui=pm.checkBoxGrp(
                                 label="Prefilter Spikes",
                                 changeCommand=self.__prefilterChanged),
                             attrName="prefilterSpikes")
+
                         self._addControl(
                             ui=pm.floatFieldGrp(
                                 label="Spike Thereshold", numberOfFields=1, enable=enablePrefilter),
@@ -955,6 +957,7 @@ class AppleseedRenderGlobalsOutputTab(AppleseedRenderGlobalsTab):
                             ui=pm.floatFieldGrp(
                                 label="Patch Distance", numberOfFields=1),
                             attrName="patchDistance")
+
                         self._addControl(
                             ui=pm.intFieldGrp(
                                 label="Denoise Scales", numberOfFields=1),
@@ -1003,7 +1006,6 @@ class AppleseedRenderGlobalsDiagnosticsTab(AppleseedRenderGlobalsTab):
 
         if path:
             mc.setAttr("appleseedRenderGlobals.logFilename", path, type="string")
-
 
     def create(self):
         # Create default render globals node if needed
