@@ -654,6 +654,8 @@ class AppleseedRenderGlobalsIntegratorsTab(AppleseedRenderGlobalsTab):
                                 enumeratedItem=self._getAttributeMenuItems("lightSamplingAlgorithm")),
                             attrName="lightSamplingAlgorithm")
 
+                        pm.separator(height=2)
+
                         self._addControl(
                             ui=pm.checkBoxGrp(
                                 label="Importance Sampling"),
