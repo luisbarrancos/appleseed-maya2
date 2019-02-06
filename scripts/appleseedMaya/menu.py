@@ -72,6 +72,7 @@ def showAbout():
     mc.setParent('..')
     mc.showWindow(window)
 
+
 __g_appleseedMenu = None
 
 
