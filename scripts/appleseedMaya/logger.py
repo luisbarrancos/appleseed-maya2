@@ -48,4 +48,5 @@ def __createLogger():
 
     return logger
 
+
 logger = __createLogger()
