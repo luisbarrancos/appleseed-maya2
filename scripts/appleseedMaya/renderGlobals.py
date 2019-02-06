@@ -606,124 +606,6 @@ class AppleseedRenderGlobalsMainTab(AppleseedRenderGlobalsTab):
 g_appleseedMainTab = AppleseedRenderGlobalsMainTab()
 
 
-class AppleseedRenderGlobalsOutputTab(AppleseedRenderGlobalsTab):
-
-    def __prefilterChanged(self, value):
-        self._uis["spikeThreshold"].setEnable(value)
-
-    def create(self):
-        # Create default render globals node if needed.
-        createGlobalNodes()
-
-        parentForm = pm.setParent(query=True)
-        pm.setUITemplate("renderGlobalsTemplate", pushTemplate=True)
-        pm.setUITemplate("attributeEditorTemplate", pushTemplate=True)
-
-        columnWidth = 400
-
-        with pm.scrollLayout("outputScrollLayout", horizontalScrollBarThickness=0):
-            with pm.columnLayout("outputColumnLayout", adjustableColumn=True, width=columnWidth):
-
-                with pm.frameLayout(label="AOVs", collapsable=True, collapse=False):
-                    with pm.columnLayout("outputColumnLayout", adjustableColumn=True, width=columnWidth):
-
-                        self._addControl(ui=pm.checkBoxGrp(label="Diffuse"), attrName="diffuseAOV")
-                        self._addControl(ui=pm.checkBoxGrp(label="Glossy"), attrName="glossyAOV")
-                        self._addControl(ui=pm.checkBoxGrp(label="Emission"), attrName="emissionAOV")
-
-                        self._addControl(ui=pm.checkBoxGrp(label="Direct Diffuse"), attrName="directDiffuseAOV")
-                        self._addControl(ui=pm.checkBoxGrp(label="Indirect Diffuse"), attrName="indirectDiffuseAOV")
-
-                        self._addControl(ui=pm.checkBoxGrp(label="Direct Glossy"), attrName="directGlossyAOV")
-                        self._addControl(ui=pm.checkBoxGrp(label="Indirect Glossy"), attrName="indirectGlossyAOV")
-
-                        self._addControl(ui=pm.checkBoxGrp(label="Albedo"), attrName="albedoAOV")
-                        self._addControl(ui=pm.checkBoxGrp(label="Normal"), attrName="normalAOV")
-
-                        self._addControl(ui=pm.checkBoxGrp(label="Invalid Samples"), attrName="invalidSamplesAOV")
-                        self._addControl(ui=pm.checkBoxGrp(label="Pixel Sample Count"), attrName="pixelSampleCountAOV")
-                        self._addControl(ui=pm.checkBoxGrp(label="Pixel Time"), attrName="pixelTimeAOV")
-                        self._addControl(ui=pm.checkBoxGrp(label="Pixel Variation"), attrName="pixelVariationAOV")
-
-                        self._addControl(ui=pm.checkBoxGrp(label="UV"), attrName="uvAOV")
-                        self._addControl(ui=pm.checkBoxGrp(label="Depth"), attrName="depthAOV")
-                        self._addControl(ui=pm.checkBoxGrp(label="Position"), attrName="positionAOV")
-
-                        self._addControl(ui=pm.checkBoxGrp(label="NPR Shading"), attrName="nprShadingAOV")
-                        self._addControl(ui=pm.checkBoxGrp(label="NPR Contours"), attrName="nprContourAOV")
-
-                with pm.frameLayout(label="Denoiser", collapsable=True, collapse=True):
-                    with pm.columnLayout("outputColumnLayout", adjustableColumn=True, width=columnWidth):
-
-                        self._addControl(
-                            ui=pm.attrEnumOptionMenuGrp(
-                                label="Denoiser",
-                                enumeratedItem=self._getAttributeMenuItems("denoiser")),
-                            attrName="denoiser")
-
-                        self._addControl(
-                            ui=pm.checkBoxGrp(
-                                label="Skip Already Denoised"),
-                            attrName="skipDenoised")
-
-                        self._addControl(
-                            ui=pm.checkBoxGrp(
-                                label="Random Pixel Order"),
-                            attrName="randomPixelOrder")
-
-                        enablePrefilter = mc.getAttr(
-                            "appleseedRenderGlobals.prefilterSpikes")
-                        self._addControl(
-                            ui=pm.checkBoxGrp(
-                                label="Prefilter Spikes",
-                                changeCommand=self.__prefilterChanged),
-                            attrName="prefilterSpikes")
-                        self._addControl(
-                            ui=pm.floatFieldGrp(
-                                label="Spike Thereshold", numberOfFields=1, enable=enablePrefilter),
-                            attrName="spikeThreshold")
-
-                        self._addControl(
-                            ui=pm.floatFieldGrp(
-                                label="Patch Distance", numberOfFields=1),
-                            attrName="patchDistance")
-                        self._addControl(
-                            ui=pm.intFieldGrp(
-                                label="Denoise Scales", numberOfFields=1),
-                            attrName="denoiseScales")
-
-                with pm.frameLayout(label="Render Stamp", collapsable=True, collapse=True):
-                    with pm.columnLayout("outputColumnLayout", adjustableColumn=True, width=columnWidth):
-
-                        self._addControl(ui=pm.checkBoxGrp(label="Enable"), attrName="renderStamp")
-                        self._addControl(
-                            ui=pm.textFieldGrp(
-                                label='Render Stamp'),
-                            attrName="renderStampString")
-
-        pm.setUITemplate("renderGlobalsTemplate", popTemplate=True)
-        pm.setUITemplate("attributeEditorTemplate", popTemplate=True)
-        pm.formLayout(
-            parentForm,
-            edit=True,
-            attachForm=[
-                ("outputScrollLayout", "top", 0),
-                ("outputScrollLayout", "bottom", 0),
-                ("outputScrollLayout", "left", 0),
-                ("outputScrollLayout", "right", 0)])
-
-        logger.debug("Created appleseed render global output tab")
-
-        # Update the newly created tab.
-        self.update()
-
-    def update(self):
-        assert mc.objExists("appleseedRenderGlobals")
-
-
-g_appleseedOutputTab = AppleseedRenderGlobalsOutputTab()
-
-
 class AppleseedRenderGlobalsIntegratorsTab(AppleseedRenderGlobalsTab):
 
     def __limitBouncesChanged(self, value):
@@ -992,6 +874,127 @@ class AppleseedRenderGlobalsIntegratorsTab(AppleseedRenderGlobalsTab):
 g_appleseedIntegratorsTab = AppleseedRenderGlobalsIntegratorsTab()
 
 
+class AppleseedRenderGlobalsOutputTab(AppleseedRenderGlobalsTab):
+
+    def __prefilterChanged(self, value):
+        self._uis["spikeThreshold"].setEnable(value)
+
+    def create(self):
+        # Create default render globals node if needed.
+        createGlobalNodes()
+
+        parentForm = pm.setParent(query=True)
+        pm.setUITemplate("renderGlobalsTemplate", pushTemplate=True)
+        pm.setUITemplate("attributeEditorTemplate", pushTemplate=True)
+
+        columnWidth = 400
+
+        with pm.scrollLayout("outputScrollLayout", horizontalScrollBarThickness=0):
+            with pm.columnLayout("outputColumnLayout", adjustableColumn=True, width=columnWidth):
+
+                with pm.frameLayout(label="AOVs", collapsable=True, collapse=False):
+                    with pm.columnLayout("outputColumnLayout", adjustableColumn=True, width=columnWidth):
+
+                        self._addControl(ui=pm.checkBoxGrp(label="Diffuse"), attrName="diffuseAOV")
+                        self._addControl(ui=pm.checkBoxGrp(label="Glossy"), attrName="glossyAOV")
+                        self._addControl(ui=pm.checkBoxGrp(label="Emission"), attrName="emissionAOV")
+
+                        self._addControl(ui=pm.checkBoxGrp(label="Direct Diffuse"), attrName="directDiffuseAOV")
+                        self._addControl(ui=pm.checkBoxGrp(label="Indirect Diffuse"), attrName="indirectDiffuseAOV")
+
+                        self._addControl(ui=pm.checkBoxGrp(label="Direct Glossy"), attrName="directGlossyAOV")
+                        self._addControl(ui=pm.checkBoxGrp(label="Indirect Glossy"), attrName="indirectGlossyAOV")
+
+                        self._addControl(ui=pm.checkBoxGrp(label="Albedo"), attrName="albedoAOV")
+                        self._addControl(ui=pm.checkBoxGrp(label="Normal"), attrName="normalAOV")
+
+                        self._addControl(ui=pm.checkBoxGrp(label="Invalid Samples"), attrName="invalidSamplesAOV")
+                        self._addControl(ui=pm.checkBoxGrp(label="Pixel Sample Count"), attrName="pixelSampleCountAOV")
+                        self._addControl(ui=pm.checkBoxGrp(label="Pixel Time"), attrName="pixelTimeAOV")
+                        self._addControl(ui=pm.checkBoxGrp(label="Pixel Variation"), attrName="pixelVariationAOV")
+
+                        self._addControl(ui=pm.checkBoxGrp(label="UV"), attrName="uvAOV")
+                        self._addControl(ui=pm.checkBoxGrp(label="Depth"), attrName="depthAOV")
+                        self._addControl(ui=pm.checkBoxGrp(label="Position"), attrName="positionAOV")
+
+                        self._addControl(ui=pm.checkBoxGrp(label="NPR Shading"), attrName="nprShadingAOV")
+                        self._addControl(ui=pm.checkBoxGrp(label="NPR Contours"), attrName="nprContourAOV")
+
+                with pm.frameLayout(label="Denoiser", collapsable=True, collapse=True):
+                    with pm.columnLayout("outputColumnLayout", adjustableColumn=True, width=columnWidth):
+
+                        self._addControl(
+                            ui=pm.attrEnumOptionMenuGrp(
+                                label="Denoiser",
+                                enumeratedItem=self._getAttributeMenuItems("denoiser")),
+                            attrName="denoiser")
+
+                        self._addControl(
+                            ui=pm.checkBoxGrp(
+                                label="Skip Already Denoised"),
+                            attrName="skipDenoised")
+
+                        self._addControl(
+                            ui=pm.checkBoxGrp(
+                                label="Random Pixel Order"),
+                            attrName="randomPixelOrder")
+
+                        enablePrefilter = mc.getAttr(
+                            "appleseedRenderGlobals.prefilterSpikes")
+                        self._addControl(
+                            ui=pm.checkBoxGrp(
+                                label="Prefilter Spikes",
+                                changeCommand=self.__prefilterChanged),
+                            attrName="prefilterSpikes")
+                        self._addControl(
+                            ui=pm.floatFieldGrp(
+                                label="Spike Thereshold", numberOfFields=1, enable=enablePrefilter),
+                            attrName="spikeThreshold")
+
+                        self._addControl(
+                            ui=pm.floatFieldGrp(
+                                label="Patch Distance", numberOfFields=1),
+                            attrName="patchDistance")
+                        self._addControl(
+                            ui=pm.intFieldGrp(
+                                label="Denoise Scales", numberOfFields=1),
+                            attrName="denoiseScales")
+
+                with pm.frameLayout(label="Render Stamp", collapsable=True, collapse=True):
+                    with pm.columnLayout("outputColumnLayout", adjustableColumn=True, width=columnWidth):
+
+                        self._addControl(ui=pm.checkBoxGrp(label="Enable"), attrName="renderStamp")
+
+                        pm.separator(height=2)
+
+                        self._addControl(
+                            ui=pm.textFieldGrp(
+                                label='Render Stamp'),
+                            attrName="renderStampString")
+
+        pm.setUITemplate("renderGlobalsTemplate", popTemplate=True)
+        pm.setUITemplate("attributeEditorTemplate", popTemplate=True)
+        pm.formLayout(
+            parentForm,
+            edit=True,
+            attachForm=[
+                ("outputScrollLayout", "top", 0),
+                ("outputScrollLayout", "bottom", 0),
+                ("outputScrollLayout", "left", 0),
+                ("outputScrollLayout", "right", 0)])
+
+        logger.debug("Created appleseed render global output tab")
+
+        # Update the newly created tab.
+        self.update()
+
+    def update(self):
+        assert mc.objExists("appleseedRenderGlobals")
+
+
+g_appleseedOutputTab = AppleseedRenderGlobalsOutputTab()
+
+
 class AppleseedRenderGlobalsDiagnosticsTab(AppleseedRenderGlobalsTab):
 
     def __chooseLogFilename(self):
@@ -1033,6 +1036,8 @@ class AppleseedRenderGlobalsDiagnosticsTab(AppleseedRenderGlobalsTab):
                                 enumeratedItem=self._getAttributeMenuItems("logLevel"),
                                 width=200),
                             attrName="logLevel")
+
+                        pm.separator(height=2)
 
                         self._addControl(
                             ui=pm.textFieldButtonGrp(
