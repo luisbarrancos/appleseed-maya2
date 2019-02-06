@@ -250,7 +250,7 @@ MStatus RenderGlobalsNode::initialize()
     // Tile size.
     m_tileSize = numAttrFn.create("tileSize", "tileSize", MFnNumericData::k2Int, 64, &status);
     numAttrFn.setMin(1, 1);
-    numAttrFn.setMax(256, 256);
+    numAttrFn.setMax(512, 512);
     numAttrFn.setKeyable(false);
     numAttrFn.setConnectable(false);
 

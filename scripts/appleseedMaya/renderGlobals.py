@@ -523,6 +523,7 @@ class AppleseedRenderGlobalsMainTab(AppleseedRenderGlobalsTab):
 
                 with pm.frameLayout(label="Motion Blur", collapsable=True, collapse=True):
                     with pm.columnLayout("appleseedColumnLayout", adjustableColumn=False, width=columnWidth):
+
                         self._addControl(
                             ui=pm.checkBoxGrp(
                                 label="Motion Blur", changeCommand=self.__motionBlurChanged),
@@ -530,26 +531,31 @@ class AppleseedRenderGlobalsMainTab(AppleseedRenderGlobalsTab):
 
                         enableMotionBlur = mc.getAttr(
                             "appleseedRenderGlobals.motionBlur")
+
                         self._addControl(
                             ui=pm.intSliderGrp(
                                 label="Camera Samples", field=True, value=2, cw=(3,160), minValue=2,
                                 fieldMinValue=2, maxValue=30, fieldMaxValue=1000, enable=enableMotionBlur),
                             attrName="mbCameraSamples")
+
                         self._addControl(
                             ui=pm.intSliderGrp(
                                 label="Transformation Samples",  field=True, value=2, cw=(3,160), minValue=2,
                                 fieldMinValue=2, maxValue=30, fieldMaxValue=1000, enable=enableMotionBlur),
                             attrName="mbTransformSamples")
+
                         self._addControl(
                             ui=pm.intSliderGrp(
                                 label="Deformation Samples", field=True, value=2, cw=(3,160), minValue=2,
                                 fieldMinValue=2, maxValue=30, fieldMaxValue=1000, enable=enableMotionBlur),
                             attrName="mbDeformSamples")
+
                         self._addControl(
                             ui=pm.floatSliderGrp(
                                 label="Shutter Open", field=True, value=-0.25, sliderStep=0.05, precision=2, cw=(3,160), minValue=-1.0,
                                 fieldMinValue=-1.0, maxValue=0.0, fieldMaxValue=0.0, enable=enableMotionBlur),
                             attrName="shutterOpen")
+
                         self._addControl(
                             ui=pm.floatSliderGrp(
                                 label="Shutter Close", field=True, value=0.25, sliderStep=0.05, precision=2, cw=(3,160), minValue=0.0,
@@ -558,10 +564,12 @@ class AppleseedRenderGlobalsMainTab(AppleseedRenderGlobalsTab):
 
                 with pm.frameLayout(label="System", collapsable=True, collapse=False):
                     with pm.columnLayout("appleseedColumnLayout", adjustableColumn=True, width=columnWidth):
+
                         self._addControl(
                             ui=pm.intFieldGrp(
                                 label="Threads", numberOfFields=1),
                             attrName="threads")
+
                         self._addControl(
                             ui=pm.intFieldGrp(
                                 label="Texture Cache Size (MB)", numberOfFields=1),
@@ -569,6 +577,7 @@ class AppleseedRenderGlobalsMainTab(AppleseedRenderGlobalsTab):
 
                 with pm.frameLayout(label="Experimental", collapsable=True, collapse=False):
                     with pm.columnLayout("appleseedColumnLayout", adjustableColumn=True, width=columnWidth):
+
                         self._addControl(
                             ui=pm.checkBoxGrp(label="Use Embree"),
                             attrName="useEmbree")
