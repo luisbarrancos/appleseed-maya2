@@ -49,7 +49,7 @@ namespace asr = renderer;
 
 namespace
 {
-    void addIndirectLightControls(MObject&& node, asr::ParamArray& lightParams)
+    void addIndirectLightControls(const MObject& node, asr::ParamArray& lightParams)
     {
         bool castIndirectLight = true;
         assert(AttributeUtils::get(node, "asCastIndirectLight", castIndirectLight) &&
