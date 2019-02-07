@@ -47,6 +47,17 @@
 namespace asf = foundation;
 namespace asr = renderer;
 
+namespace
+{
+    void addIndirectLightControls(MObject&& node, asr::ParamArray& lightParams)
+    {
+        bool castIndirectLight = true;
+        assert(AttributeUtils::get(node, "asCastIndirectLight", castIndirectLight) &&
+               "failed to get asCastIndirectLight attribute.");
+        lightParams.insert_path("cast_indirect_light", castIndirectLight);
+    }
+};
+
 void LightExporter::registerExporter()
 {
     NodeExporterFactory::registerDagNodeExporter("directionalLight", &LightExporter::create);
@@ -128,24 +139,13 @@ void LightExporter::createEntities(
             asr::ColorEntityFactory::create(colorName.asChar(), params, values));
     }
 
-    auto extraControls = [&](asr::ParamArray& lightParams)
-    {
-        bool castIndirectLight = true;
-        AttributeUtils::get(node(), "asCastIndirectLight", castIndirectLight);
-        lightParams.insert("cast_indirect_light", castIndirectLight);
-
-        float importanceMultiplier = 1.0f;
-        AttributeUtils::get(node(), "asImportanceMultiplier", importanceMultiplier);
-        lightParams.insert("importance_multiplier", importanceMultiplier);
-    };
-
     if (depNodeFn.typeName() == "directionalLight")
     {
         lightFactory = lightFactories.lookup("directional_light");
         lightParams.insert("irradiance", colorName.asChar());
         lightParams.insert("irradiance_multiplier", intensity);
 
-        extraControls(lightParams);
+        addIndirectLightControls(node(), lightParams);
     }
     else if (depNodeFn.typeName() == "pointLight")
     {
@@ -153,7 +153,7 @@ void LightExporter::createEntities(
         lightParams.insert("intensity", colorName.asChar());
         lightParams.insert("intensity_multiplier", intensity);
 
-        extraControls(lightParams);
+        addIndirectLightControls(node(), lightParams);
     }
     else if (depNodeFn.typeName() == "spotLight")
     {
@@ -170,7 +170,7 @@ void LightExporter::createEntities(
         const double outerAngle = coneAngle.asDegrees() + 2.0 * penumbraAngle.asDegrees();
         lightParams.insert("outer_angle", outerAngle);
 
-        extraControls(lightParams);
+        addIndirectLightControls(node(), lightParams);
     }
     else
     {
