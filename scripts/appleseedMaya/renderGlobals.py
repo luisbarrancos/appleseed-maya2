@@ -64,6 +64,7 @@ def createRenderTabsMelProcedures():
         }
         '''
              )
+    """
     mel.eval('''
         global proc appleseedCreateAppleseedMainTabProcedure()
         {
@@ -96,6 +97,7 @@ def createRenderTabsMelProcedures():
         }
         '''
              )
+             """
     mel.eval('''
         global proc appleseedCreateAppleseedOutputTabProcedure()
         {
@@ -141,6 +143,7 @@ def renderSettingsBuiltCallback(renderer):
             "appleseedUpdateCommonTabProcedure"
         )
     )
+    """
     pm.renderer(
         "appleseed",
         edit=True,
@@ -159,6 +162,7 @@ def renderSettingsBuiltCallback(renderer):
             "appleseedUpdateAppleseedIntegratorsTabProcedure"
         )
     )
+    """
     pm.renderer(
         "appleseed",
         edit=True,
@@ -424,8 +428,8 @@ class AppleseedRenderGlobalsMainTab(AppleseedRenderGlobalsTab):
         with pm.scrollLayout("appleseedScrollLayout", horizontalScrollBarThickness=0):
             with pm.columnLayout("appleseedColumnLayout", adjustableColumn=True, width=columnWidth):
 
-                with pm.frameLayout(label="Sampling", collapsable=True, collapse=False):
-                    with pm.columnLayout("appleseedColumnLayout", adjustableColumn=False, width=columnWidth):
+                with pm.frameLayout("samplingFrameLayout", label="Sampling", collapsable=True, collapse=False):
+                    with pm.columnLayout("samplingColumnLayout", adjustableColumn=False, width=columnWidth):
 
                         self._addControl(
                             ui=pm.intSliderGrp(
@@ -482,8 +486,8 @@ class AppleseedRenderGlobalsMainTab(AppleseedRenderGlobalsTab):
                                 fieldMinValue=1, maxValue=1024, fieldMaxValue=65536),
                             attrName="tileSize")
 
-                with pm.frameLayout(label="Scene", collapsable=True, collapse=False):
-                    with pm.columnLayout("appleseedColumnLayout", adjustableColumn=False, width=columnWidth):
+                with pm.frameLayout("sceneFrameLayout", label="Scene", collapsable=True, collapse=False):
+                    with pm.columnLayout("sceneColumnLayout", adjustableColumn=False, width=columnWidth):
 
                         self._addControl(
                             ui=pm.floatSliderGrp(
@@ -521,8 +525,8 @@ class AppleseedRenderGlobalsMainTab(AppleseedRenderGlobalsTab):
                             ui=pm.checkBoxGrp(label="Environment Visible"),
                             attrName="bgLight")
 
-                with pm.frameLayout(label="Motion Blur", collapsable=True, collapse=True):
-                    with pm.columnLayout("appleseedColumnLayout", adjustableColumn=False, width=columnWidth):
+                with pm.frameLayout("motionBlurFrameLayout", label="Motion Blur", collapsable=True, collapse=True):
+                    with pm.columnLayout("motionBlurColumnLayout", adjustableColumn=False, width=columnWidth):
 
                         self._addControl(
                             ui=pm.checkBoxGrp(
@@ -562,8 +566,8 @@ class AppleseedRenderGlobalsMainTab(AppleseedRenderGlobalsTab):
                                 fieldMinValue=0.0, maxValue=1.0, fieldMaxValue=1.0, enable=enableMotionBlur),
                             attrName="shutterClose")
 
-                with pm.frameLayout(label="System", collapsable=True, collapse=False):
-                    with pm.columnLayout("appleseedColumnLayout", adjustableColumn=True, width=columnWidth):
+                with pm.frameLayout("systemFrameLayout", label="System", collapsable=True, collapse=False):
+                    with pm.columnLayout("systemColumnLayout", adjustableColumn=True, width=columnWidth):
 
                         self._addControl(
                             ui=pm.intFieldGrp(
@@ -575,8 +579,8 @@ class AppleseedRenderGlobalsMainTab(AppleseedRenderGlobalsTab):
                                 label="Texture Cache Size (MB)", numberOfFields=1),
                             attrName="maxTexCacheSize")
 
-                with pm.frameLayout(label="Experimental", collapsable=True, collapse=False):
-                    with pm.columnLayout("appleseedColumnLayout", adjustableColumn=True, width=columnWidth):
+                with pm.frameLayout("experimentalFrameLayout", label="Experimental", collapsable=True, collapse=False):
+                    with pm.columnLayout("experimentalColumnLayout", adjustableColumn=True, width=columnWidth):
 
                         self._addControl(
                             ui=pm.checkBoxGrp(label="Use Embree"),
@@ -636,11 +640,11 @@ class AppleseedRenderGlobalsIntegratorsTab(AppleseedRenderGlobalsTab):
 
         columnWidth = 400
 
-        with pm.scrollLayout("IntegratorsScrollLayout", horizontalScrollBarThickness=0):
-            with pm.columnLayout("IntegratorsColumnLayout", adjustableColumn=True, width=columnWidth):
+        with pm.scrollLayout("integratorsScrollLayout", horizontalScrollBarThickness=0):
+            with pm.columnLayout("integratorsColumnLayout", adjustableColumn=True, width=columnWidth):
 
-                with pm.frameLayout(label="Lighting", collapsable=True, collapse=False):
-                    with pm.columnLayout("IntegratorsColumnLayout", adjustableColumn=True, width=columnWidth):
+                with pm.frameLayout("lightingFrameLayout", Lightinglabel="Lighting", collapsable=True, collapse=False):
+                    with pm.columnLayout("lightingColumnLayout", adjustableColumn=True, width=columnWidth):
 
                         self._addControl(
                             ui=pm.attrEnumOptionMenuGrp(
@@ -661,8 +665,8 @@ class AppleseedRenderGlobalsIntegratorsTab(AppleseedRenderGlobalsTab):
                                 label="Importance Sampling"),
                             attrName="lightImportanceSampling")
 
-                    with pm.frameLayout(label="Path Tracing", collapsable=True, collapse=False):
-                        with pm.columnLayout("IntegratorsColumnLayout", adjustableColumn=False, width=columnWidth):
+                    with pm.frameLayout("pathTracingFrameLayout", label="Path Tracing", collapsable=True, collapse=False):
+                        with pm.columnLayout("pathTracingColumnLayout", adjustableColumn=False, width=columnWidth):
 
                             self._addControl(
                                 ui=pm.checkBoxGrp(label="Caustics"),
@@ -746,8 +750,8 @@ class AppleseedRenderGlobalsIntegratorsTab(AppleseedRenderGlobalsTab):
                                     fieldMinValue=0.0, maxValue=2.0, fieldMaxValue=100.0, enable=enableMaxRayIntensity),
                                 attrName="maxRayIntensity")
 
-                    with pm.frameLayout(label="Stochastic Progressive Photon Mapping", collapsable=True, collapse=False):
-                        with pm.columnLayout("IntegratorsColumnLayout", adjustableColumn=False, width=columnWidth):
+                    with pm.frameLayout("sppmFrameLayout", label="Stochastic Progressive Photon Mapping", collapsable=True, collapse=False):
+                        with pm.columnLayout("sppmColumnLayout", adjustableColumn=False, width=columnWidth):
 
                             self._addControl(
                                 ui=pm.attrEnumOptionMenuGrp(
@@ -859,10 +863,10 @@ class AppleseedRenderGlobalsIntegratorsTab(AppleseedRenderGlobalsTab):
             parentForm,
             edit=True,
             attachForm=[
-                ("IntegratorsScrollLayout", "top", 0),
-                ("IntegratorsScrollLayout", "bottom", 0),
-                ("IntegratorsScrollLayout", "left", 0),
-                ("IntegratorsScrollLayout", "right", 0)])
+                ("integratorsScrollLayout", "top", 0),
+                ("integratorsScrollLayout", "bottom", 0),
+                ("integratorsScrollLayout", "left", 0),
+                ("integratorsScrollLayout", "right", 0)])
 
         logger.debug("Created appleseed integrators render globals main tab.")
 
@@ -894,8 +898,8 @@ class AppleseedRenderGlobalsOutputTab(AppleseedRenderGlobalsTab):
         with pm.scrollLayout("outputScrollLayout", horizontalScrollBarThickness=0):
             with pm.columnLayout("outputColumnLayout", adjustableColumn=True, width=columnWidth):
 
-                with pm.frameLayout(label="AOVs", collapsable=True, collapse=False):
-                    with pm.columnLayout("outputColumnLayout", adjustableColumn=True, width=columnWidth):
+                with pm.frameLayout("outputAOVSframeLayout", label="AOVs", collapsable=True, collapse=False):
+                    with pm.columnLayout("outputAOVsColumnLayout", adjustableColumn=True, width=columnWidth):
 
                         self._addControl(ui=pm.checkBoxGrp(label="Diffuse"), attrName="diffuseAOV")
                         self._addControl(ui=pm.checkBoxGrp(label="Glossy"), attrName="glossyAOV")
@@ -922,8 +926,8 @@ class AppleseedRenderGlobalsOutputTab(AppleseedRenderGlobalsTab):
                         self._addControl(ui=pm.checkBoxGrp(label="NPR Shading"), attrName="nprShadingAOV")
                         self._addControl(ui=pm.checkBoxGrp(label="NPR Contours"), attrName="nprContourAOV")
 
-                with pm.frameLayout(label="Denoiser", collapsable=True, collapse=True):
-                    with pm.columnLayout("outputColumnLayout", adjustableColumn=True, width=columnWidth):
+                with pm.frameLayout("outputDenoiserFrameLayout", label="Denoiser", collapsable=True, collapse=True):
+                    with pm.columnLayout("outputDenoiserColumnLayout", adjustableColumn=True, width=columnWidth):
 
                         self._addControl(
                             ui=pm.attrEnumOptionMenuGrp(
@@ -965,8 +969,8 @@ class AppleseedRenderGlobalsOutputTab(AppleseedRenderGlobalsTab):
                                 label="Denoise Scales", numberOfFields=1),
                             attrName="denoiseScales")
 
-                with pm.frameLayout(label="Render Stamp", collapsable=True, collapse=True):
-                    with pm.columnLayout("outputColumnLayout", adjustableColumn=True, width=columnWidth):
+                with pm.frameLayout("outputRenderStampFrameLayout", label="Render Stamp", collapsable=True, collapse=True):
+                    with pm.columnLayout("outputRenderStampColumnLayout", adjustableColumn=True, width=columnWidth):
 
                         self._addControl(ui=pm.checkBoxGrp(label="Enable"), attrName="renderStamp")
 
@@ -1022,8 +1026,8 @@ class AppleseedRenderGlobalsDiagnosticsTab(AppleseedRenderGlobalsTab):
         with pm.scrollLayout("diagnosticsScrollLayout", horizontalScrollBarThickness=0):
             with pm.columnLayout("diagnosticsColumnLayout", adjustableColumn=True, width=columnWidth):
 
-                with pm.frameLayout(label="Override Shaders", collapsable=True, collapse=True):
-                    with pm.columnLayout("diagnosticsColumnLayout", adjustableColumn=False, width=columnWidth):
+                with pm.frameLayout("overrideShadersFrameLayout", label="Override Shaders", collapsable=True, collapse=True):
+                    with pm.columnLayout("overrideShadersColumnLayout", adjustableColumn=False, width=columnWidth):
 
                         self._addControl(
                             ui=pm.attrEnumOptionMenuGrp(
@@ -1031,8 +1035,8 @@ class AppleseedRenderGlobalsDiagnosticsTab(AppleseedRenderGlobalsTab):
                                 enumeratedItem=self._getAttributeMenuItems("diagnostics")),
                             attrName="diagnostics")
 
-                with pm.frameLayout(label="Logging", collapsable=True, collapse=True):
-                    with pm.columnLayout("diagnosticsColumnLayout", adjustableColumn=True, width=columnWidth):
+                with pm.frameLayout("loggingFrameLayout", label="Logging", collapsable=True, collapse=True):
+                    with pm.columnLayout("LoggingColumnLayout", adjustableColumn=True, width=columnWidth):
 
                         self._addControl(
                             ui=pm.attrEnumOptionMenuGrp(
