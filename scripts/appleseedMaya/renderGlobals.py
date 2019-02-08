@@ -899,7 +899,8 @@ class AppleseedRenderGlobalsOutputTab(AppleseedRenderGlobalsTab):
             with pm.columnLayout("outputColumnLayout", adjustableColumn=True, width=columnWidth):
 
                 with pm.frameLayout("outputAOVSframeLayout", label="AOVs", collapsable=True, collapse=False):
-                    with pm.columnLayout("outputAOVsColumnLayout", adjustableColumn=True, width=columnWidth):
+                    with pm.rowColumnLayout("outputAOVsColumnLayout", adjustableColumn=True, width=columnWidth,
+                                            numberOfColumns=2, rowSpacing=(2,2)):
 
                         self._addControl(ui=pm.checkBoxGrp(label="Diffuse"), attrName="diffuseAOV")
                         self._addControl(ui=pm.checkBoxGrp(label="Glossy"), attrName="glossyAOV")
@@ -927,7 +928,7 @@ class AppleseedRenderGlobalsOutputTab(AppleseedRenderGlobalsTab):
                         self._addControl(ui=pm.checkBoxGrp(label="NPR Contours"), attrName="nprContourAOV")
 
                 with pm.frameLayout("outputDenoiserFrameLayout", label="Denoiser", collapsable=True, collapse=True):
-                    with pm.columnLayout("outputDenoiserColumnLayout", adjustableColumn=True, width=columnWidth):
+                    with pm.columnLayout("outputDenoiserColumnLayout", adjustableColumn=True, width=columnWidth, rowSpacing=2):
 
                         self._addControl(
                             ui=pm.attrEnumOptionMenuGrp(
@@ -970,15 +971,12 @@ class AppleseedRenderGlobalsOutputTab(AppleseedRenderGlobalsTab):
                             attrName="denoiseScales")
 
                 with pm.frameLayout("outputRenderStampFrameLayout", label="Render Stamp", collapsable=True, collapse=True):
-                    with pm.columnLayout("outputRenderStampColumnLayout", adjustableColumn=True, width=columnWidth):
+                    with pm.columnLayout("outputRenderStampColumnLayout", adjustableColumn=True, width=columnWidth, rowSpacing=2):
 
-                        self._addControl(ui=pm.checkBoxGrp(label="Enable"), attrName="renderStamp")
-
+                        self._addControl(ui=pm.checkBoxGrp(label="Enable", height=18), attrName="renderStamp")
                         pm.separator(height=2)
-
                         self._addControl(
-                            ui=pm.textFieldGrp(
-                                label='Render Stamp'),
+                            ui=pm.textFieldGrp(label="Render Stamp", height=26),
                             attrName="renderStampString")
 
         pm.setUITemplate("renderGlobalsTemplate", popTemplate=True)
