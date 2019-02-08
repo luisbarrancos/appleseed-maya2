@@ -936,24 +936,33 @@ class AppleseedRenderGlobalsOutputTab(AppleseedRenderGlobalsTab):
                                 enumeratedItem=self._getAttributeMenuItems("denoiser")),
                             attrName="denoiser")
 
-                        self._addControl(
-                            ui=pm.checkBoxGrp(
-                                label="Skip Already Denoised"),
-                            attrName="skipDenoised")
+                        pm.separator(height=2)
 
-                        self._addControl(
-                            ui=pm.checkBoxGrp(
-                                label="Random Pixel Order"),
-                            attrName="randomPixelOrder")
+                        with pm.columnLayout("denoiserCheckboxesRowColumnLayout",
+                                                adjustableColumn=True, width=columnWidth,
+                                                rowSpacing=2):
 
-                        enablePrefilter = mc.getAttr(
-                            "appleseedRenderGlobals.prefilterSpikes")
+                            self._addControl(
+                                ui=pm.checkBoxGrp(
+                                    label="Skip Already Denoised"),
+                                attrName="skipDenoised")
 
-                        self._addControl(
-                            ui=pm.checkBoxGrp(
-                                label="Prefilter Spikes",
-                                changeCommand=self.__prefilterChanged),
-                            attrName="prefilterSpikes")
+                            self._addControl(
+                                ui=pm.checkBoxGrp(
+                                    label="Random Pixel Order"),
+                                attrName="randomPixelOrder")
+
+                            enablePrefilter = mc.getAttr(
+                                "appleseedRenderGlobals.prefilterSpikes")
+
+                            self._addControl(
+                                ui=pm.checkBoxGrp(
+                                    label="Prefilter Spikes",
+                                    changeCommand=self.__prefilterChanged),
+                                attrName="prefilterSpikes")
+
+
+                        pm.separator(height=2)
 
                         self._addControl(
                             ui=pm.floatFieldGrp(
