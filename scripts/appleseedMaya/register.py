@@ -132,7 +132,8 @@ def register():
         ("createRenderNodeSelectNodeCategories", createRenderNodeSelectNodeCategoriesCallback),
         ("createRenderNodePluginChange", createRenderNodePluginChangeCallback),
         ("renderNodeClassification", renderNodeClassificationCallback),
-        ("createRenderNodeCommand", createRenderNodeCallback),
+
+        ("createRenderNodeCommand", createRenderNodeCommandCallback),
         ("nodeCanBeUsedAsMaterial", nodeCanBeUsedAsMaterialCallback),
         ("buildRenderNodeTreeListerContent", buildRenderNodeTreeListerContentCallback)
     ]

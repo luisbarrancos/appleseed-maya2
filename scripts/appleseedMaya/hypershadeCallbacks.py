@@ -44,10 +44,7 @@ def hyperShadePanelBuildCreateSubMenuCallback():
 
 
 def hyperShadePanelPluginChangeCallback(classification, changeType):
-    if 'rendernode/appleseed' in classification:
-        return 1
-
-    return 0
+    return "rendernode/appleseed" in classification
 
 
 def createRenderNodeSelectNodeCategoriesCallback(flag, treeLister):
@@ -56,10 +53,7 @@ def createRenderNodeSelectNodeCategoriesCallback(flag, treeLister):
 
 
 def createRenderNodePluginChangeCallback(classification):
-    if 'rendernode/appleseed' in classification:
-        return 1
-
-    return 0
+    return "rendernode/appleseed" in classification
 
 
 def renderNodeClassificationCallback():
@@ -67,38 +61,34 @@ def renderNodeClassificationCallback():
 
 
 def createAsRenderNode(nodeType=None, postCommand=None):
+
     classification = mc.getClassification(nodeType)
-    logger.debug(
-        "CreateAsRenderNode called: nodeType = {0}, class = {1}, pcmd = {2}".format(
-            nodeType,
-            classification,
-            postCommand
-        )
-    )
+    logger.debug("CreateAsRenderNode called: nodeType = {0}, class = {1}, pcmd = {2}".format(
+        nodeType, classification, postCommand))
 
     for cl in classification:
         if "rendernode/appleseed/surface" in cl.lower():
-            mat = mc.shadingNode(nodeType, asShader=True)
-            shadingGroup = mc.sets(
-                renderable=True,
-                noSurfaceShader=True,
-                empty=True,
-                name=mat + "SG"
-            )
-            mc.connectAttr(mat + ".outColor", shadingGroup + ".surfaceShader")
 
+            mat = mc.shadingNode(nodeType, asShader=True)
+            shadingGroup = mc.sets(renderable=True, noSurfaceShader=True, empty=True, name=mat + "SG")
+            mc.connectAttr(mat + ".outColor", shadingGroup + ".surfaceShader")
             logger.debug("Created shading node {0} asShader".format(mat))
+
         elif "rendernode/appleseed/texture/2d" in cl.lower():
+
             mat = mc.shadingNode(nodeType, asTexture=True)
             placeTex = mc.shadingNode("place2dTexture", asUtility=True)
             mc.connectAttr(placeTex + ".outUV", mat + ".uv")
             mc.connectAttr(placeTex + ".outUvFilterSize", mat + ".uvFilterSize")
             logger.debug("Created shading node {0} asTexture2D".format(mat))
+
         elif "rendernode/appleseed/texture/3d" in cl.lower():
+
             mat = mc.shadingNode(nodeType, asTexture=True)
             placeTex = mc.shadingNode("place3dTexture", asUtility=True)
             mc.connectAttr(placeTex + ".wim[0]", mat + ".placementMatrix")
             logger.debug("Created shading node {0} asTexture3D".format(mat))
+
         else:
             mat = mc.shadingNode(nodeType, asUtility=True)
             logger.debug("Created shading node {0} asUtility".format(mat))
@@ -111,69 +101,42 @@ def createAsRenderNode(nodeType=None, postCommand=None):
     return ""
 
 
-def createRenderNodeCallback(postCommand, nodeType):
-    #logger.debug("createRenderNodeCallback called!")
+def createRenderNodeCommandCallback(postCommand, nodeType):
+    # logger.debug("createRenderNodeCallback called!")
 
     for c in mc.getClassification(nodeType):
         if 'rendernode/appleseed' in c.lower():
-            buildNodeCmd = (
-                "import appleseedMaya.hypershadeCallbacks;"
-                "appleseedMaya.hypershadeCallbacks.createAsRenderNode"
-                "(nodeType=\\\"{0}\\\", postCommand='{1}')").format(nodeType, postCommand)
+            buildNodeCmd = ("import appleseedMaya.hypershadeCallbacks;"
+                            "appleseedMaya.hypershadeCallbacks.createAsRenderNode"
+                            "(nodeType=\\\"{0}\\\", postCommand='{1}')").format(nodeType, postCommand)
             return "string $cmd = \"{0}\"; python($cmd);".format(buildNodeCmd)
 
 
 def buildRenderNodeTreeListerContentCallback(tl, postCommand, filterString):
-    melCmd = 'addToRenderNodeTreeLister("{0}", "{1}", "{2}", "{3}", "{4}", "{5}");'.format(
-        tl,
-        postCommand,
-        "appleseed/Surface",
-        "rendernode/appleseed/surface",
-        "-asShader",
-        ""
-    )
+    melCmd = 'addToRenderNodeTreeLister("{0}", "{1}", "{2}", "{3}", "{4}", "{5}");'.format(tl, postCommand,
+        "appleseed/Surface", "rendernode/appleseed/surface", "-asShader", "")
     logger.debug("buildRenderNodeTreeListerContentCallback: mel = %s" % melCmd)
     mel.eval(melCmd)
 
-    melCmd = 'addToRenderNodeTreeLister("{0}", "{1}", "{2}", "{3}", "{4}", "{5}");'.format(
-        tl,
-        postCommand,
-        "appleseed/2D Textures",
-        "rendernode/appleseed/texture/2d",
-        "-asTexture",
-        ""
-    )
+    melCmd = 'addToRenderNodeTreeLister("{0}", "{1}", "{2}", "{3}", "{4}", "{5}");'.format(tl, postCommand,
+        "appleseed/2D Textures", "rendernode/appleseed/texture/2d", "-asTexture", "")
     logger.debug("buildRenderNodeTreeListerContentCallback: mel = %s" % melCmd)
     mel.eval(melCmd)
 
-    melCmd = 'addToRenderNodeTreeLister("{0}", "{1}", "{2}", "{3}", "{4}", "{5}");'.format(
-        tl,
-        postCommand,
-        "appleseed/3D Textures",
-        "rendernode/appleseed/texture/3d",
-        "-asTexture",
-        ""
-    )
+    melCmd = 'addToRenderNodeTreeLister("{0}", "{1}", "{2}", "{3}", "{4}", "{5}");'.format(tl, postCommand,
+        "appleseed/3D Textures", "rendernode/appleseed/texture/3d", "-asTexture", "")
     logger.debug("buildRenderNodeTreeListerContentCallback: mel = %s" % melCmd)
     mel.eval(melCmd)
 
-    melCmd = 'addToRenderNodeTreeLister("{0}", "{1}", "{2}", "{3}", "{4}", "{5}");'.format(
-        tl,
-        postCommand,
-        "appleseed/Utilities",
-        "rendernode/appleseed/utility",
-        "-asUtility",
-        ""
-    )
+    melCmd = 'addToRenderNodeTreeLister("{0}", "{1}", "{2}", "{3}", "{4}", "{5}");'.format(tl, postCommand,
+        "appleseed/Utilities", "rendernode/appleseed/utility", "-asUtility", "")
     logger.debug("buildRenderNodeTreeListerContentCallback: mel = %s" % melCmd)
     mel.eval(melCmd)
 
 
 def nodeCanBeUsedAsMaterialCallback(nodeId, nodeOwner):
-    logger.debug((
-        "nodeCanBeUsedAsMaterialCallback called: "
-        "nodeId = {0}, nodeOwner = {1}").format(nodeId, nodeOwner)
-    )
+    logger.debug(("nodeCanBeUsedAsMaterialCallback called: "
+                  "nodeId = {0}, nodeOwner = {1}").format(nodeId, nodeOwner))
 
     if nodeOwner == 'appleseedMaya':
         return 1
