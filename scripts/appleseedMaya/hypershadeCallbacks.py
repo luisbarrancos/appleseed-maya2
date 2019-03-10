@@ -40,7 +40,7 @@ def hyperShadePanelBuildCreateMenuCallback():
 
 
 def hyperShadePanelBuildCreateSubMenuCallback():
-    return "rendernode/appleseed/surface"
+    return "rendernode/appleseed"
 
 
 def hyperShadePanelPluginChangeCallback(classification, changeType):
