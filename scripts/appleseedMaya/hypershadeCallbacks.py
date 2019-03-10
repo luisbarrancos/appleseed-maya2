@@ -178,43 +178,6 @@ def createRenderNodeCommandCallback(postCommand, nodeType):
             return "string $cmd = \"{0}\"; python($cmd);".format(buildNodeCmd)
 
 
-def firstConnectedShaderCallback(nodeName):
-    logger.debug("firstConnectedShaderCallback called!")
-
-    classification = mc.getClassification(mc.nodeType(nodeName))
-
-    if "rendernode/appleseed/surface" in classification.lower():
-        return mc.listConnections(nodeName, source=True, destination=False)[0]
-    else:
-        shader = mc.listConnections(nodeName, type="shadingEngine", source=True, destination=False)
-        if shader:
-            return shader[0]
-
-    return None
-
-
-def allConnectedShadersCallback(nodeName):
-    logger.debug("allConnectedShadersCallback called!")
-
-    shaders = []
-    connections = mc.listConnections(nodeName, source=True, destination=False)
-
-    if not connections:
-        return None
-
-    for node in connections:
-        classification = mc.getClassification(mc.nodeType(node))
-
-        if any(shader in classification for shader in [
-            "rendernode/appleseed/surface",
-            "rendernode/appleseed/volume",
-            "rendernode/appleseed/displacement"
-        ]):
-            shaders.append(shader)
-
-    return ":".join(shaders) if shaders else None
-
-
 def buildRenderNodeTreeListerContentCallback(tl, postCommand, filterString):
 
     melCmd = 'addToRenderNodeTreeLister("{0}", "{1}", "{2}", "{3}", "{4}", "{5}");'.format(
@@ -293,6 +256,45 @@ def buildRenderNodeTreeListerContentCallback(tl, postCommand, filterString):
     )
     logger.debug("buildRenderNodeTreeListerContentCallback: mel = %s" % melCmd)
     mel.eval(melCmd)
+
+
+def firstConnectedShaderCallback(nodeName):
+    logger.debug("firstConnectedShaderCallback called!")
+
+    classification = mc.getClassification(mc.nodeType(nodeName))
+
+    if "rendernode/appleseed/surface" in classification.lower():
+        return mc.listConnections(nodeName, source=True, destination=False)[0]
+    else:
+        shader = mc.listConnections(nodeName, type="shadingEngine", source=True, destination=False)
+        if shader:
+            return shader[0]
+
+    return None
+
+
+def allConnectedShadersCallback(nodeName):
+    logger.debug("allConnectedShadersCallback called!")
+
+    shaders = []
+    connections = mc.listConnections(nodeName, source=True, destination=False)
+
+    if not connections:
+        return None
+
+    for node in connections:
+        classification = mc.getClassification(mc.nodeType(node))
+
+        if any(shader in classification for shader in [
+            "rendernode/appleseed/surface",
+            "rendernode/appleseed/volume",
+            "rendernode/appleseed/displacement"
+        ]):
+            shaders.append(shader)
+
+    return ":".join(shaders) if shaders else None
+
+
 
 
 def nodeCanBeUsedAsMaterialCallback(nodeId, nodeOwner):

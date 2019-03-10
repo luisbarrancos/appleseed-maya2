@@ -133,11 +133,11 @@ def register():
         ("createRenderNodePluginChange", createRenderNodePluginChangeCallback),
         ("renderNodeClassification", renderNodeClassificationCallback),
         ("createRenderNodeCommand", createRenderNodeCommandCallback),
+        ("buildRenderNodeTreeListerContent", buildRenderNodeTreeListerContentCallback),
         ("firstConnectedShader", firstConnectedShaderCallback),
         ("allConnectedShaders", allConnectedShadersCallback),
 
         ("nodeCanBeUsedAsMaterial", nodeCanBeUsedAsMaterialCallback),
-        ("buildRenderNodeTreeListerContent", buildRenderNodeTreeListerContentCallback)
     ]
     for h, c in asHypershadeCallbacks:
         logger.debug("Adding {0} callback.".format(h))
