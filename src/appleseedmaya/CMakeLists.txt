@@ -123,6 +123,8 @@ set (appleseed_maya_exporters_sources
     exporters/place3dtextureexporter.h
     exporters/rampexporter.cpp
     exporters/rampexporter.h
+    exporters/rampshaderexporter.cpp
+    exporters/rampshaderexporter.h
     exporters/remapcolorexporter.cpp
     exporters/remapcolorexporter.h
     exporters/remaphsvexporter.cpp
