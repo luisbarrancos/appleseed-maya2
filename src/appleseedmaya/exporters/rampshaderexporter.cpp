@@ -61,11 +61,12 @@ namespace
         "reflectivity"
     };
 
-    const std::array<const MString, 5> colorAttrNames = {
+    const std::array<const MString, 6> colorAttrNames = {
         "color",
         "transparency",
         "incandescence",
         "specularColor",
+        "reflectedColor",
         "environment"
     };
 
@@ -252,7 +253,7 @@ void RampShaderExporter::exportParameterValue(
             const std::array<const MString, 4> rampAttrs = {
                 attrName,
                 "in_" + attrName + "_Position",
-                "in_" + attrName + "_FloatValue",
+                "in_" + attrName + "_Value",
                 "in_" + attrName + "_Interp"
             };
 
