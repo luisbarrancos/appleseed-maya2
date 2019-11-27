@@ -43,61 +43,89 @@ enum AppleseedMayaTypeIds
     PhysicalSkyLightNodeTypeId      = 0x001279c2,   // 1210818
     AsDisneyNodeTypeId              = 0x001279c3,   // 1210819
     AsGlassNodeTypeId               = 0x001279c4,   // 1210820
+
     AsCarPaintNodeTypeId            = 0x001279c5,   // 1210821
+
     AsVoronoi3DNodeTypeId           = 0x001279c6,   // 1210822
     AsVoronoi2DNodeTypeId           = 0x001279c7,   // 1210823
     AsColorTransformNodeTypeId      = 0x001279c8,   // 1210824
+
     AsProjectionNodeTypeId          = 0x001279c9,   // 1210825
+
     AsNoise3DNodeTypeId             = 0x001279ca,   // 1210826
     AsNoise2DNodeTypeId             = 0x001279cb,   // 1210827
     AlphaMapNodeTypeId              = 0x001279cc,   // 1210828
     AsLuminanceNodeTypeId           = 0x001279cd,   // 1210829
+
     AsColorCorrectNodeTypeId        = 0x001279ce,   // 1210830
+
     AsColorSpaceNodeTypeId          = 0x001279cf,   // 1210831
     AsBlackbodyNodeTypeId           = 0x001279d0,   // 1210832
     AsBlendColorNodeTypeId          = 0x001279d1,   // 1210833
     AsRandomizeTexturesNodeTypeId   = 0x001279d2,   // 1210834
     AsVaryColorNodeTypeId           = 0x001279d3,   // 1210835
     AsStandardSurfaceNodeTypeId     = 0x001279d4,   // 1210836
+
     AsLayeredSurfaceNodeTypeId      = 0x001279d5,   // 1210837
+
     AsSkinNodeTypeId                = 0x001279d6,   // 1210838
+
     AsPlasticNodeTypeId             = 0x001279d7,   // 1210839
+
     AsThinFilmNodeTypeId            = 0x001279d8,   // 1210840
+
     AsIdManifoldNodeTypeId          = 0x001279d9,   // 1210841
     AsSwitchTextureNodeTypeId       = 0x001279da,   // 1210842
     AsDoubleShadeNodeTypeId         = 0x001279db,   // 1210843
     AsRaySwitchNodeTypeId           = 0x001279dc,   // 1210844
     AsBlendShaderNodeTypeId         = 0x001279dd,   // 1210845
     AsLayerTextureNodeTypeId        = 0x001279de,   // 1210846
+
     AsFlakesNodeTypeId              = 0x001279df,   // 1210847
+
     AsAnisoVectorFieldNodeTypeId    = 0x001278e0,   // 1210848
     AsCreateMaskNodeTypeId          = 0x001278e1,   // 1210849
     AsRampNodeTypeId                = 0x001278e2,   // 1210850
+
     AsVolumeRampNodeTypeId          = 0x001278e3,   // 1210851
+
     AsSubsurfaceNodeTypeId          = 0x001279e4,   // 1210852
+
     AsTriPlanarNodeTypeId           = 0x001279e5,   // 1210853
+
     AsDirtNodeTypeId                = 0x001279e6,   // 1210854
     AsCurvatureNodeTypeId           = 0x001279e7,   // 1210855
     AsBevelNodeTypeId               = 0x001279e8,   // 1210856
+
     AsHairNodeTypeId                = 0x001279e9,   // 1210857
+
     AsClothNodeTypeId               = 0x001279ea,   // 1210858
+
     AsVolumeNodeTypeId              = 0x001279eb,   // 1210859
+
     AsShadowCatcherNodeTypeId       = 0x001279ec,   // 1210860
+
     AsEmissionNodeTypeId            = 0x001279ed,   // 1210861
     AsMatteNodeTypeId               = 0x001279ee,   // 1210862
     AsGlobalsNodeTypeId             = 0x001279ef,   // 1210863
     AsSpaceTransformNodeTypeId      = 0x001279f0,   // 1210864
     AsFresnelNodeTypeId             = 0x001279f1,   // 1210865
     AsSwizzleNodeTypeId             = 0x001279f2,   // 1210866
+
     AsBakePointcloudNodeTypeId      = 0x001279f3,   // 1210867
     AsReadPointcloudNodeTypeId      = 0x001279f4,   // 1210868
+
     AsMDLMaterialNodeTypeId         = 0x001279f5,   // 1210869
+
     AsMatcapNodeTypeId              = 0x001279f6,   // 1210870
+
     AsAngleBetweenNodeTypeId        = 0x001279f7,   // 1210871
     AsAttributesNodeTypeId          = 0x001279f8,   // 1210872
     AsMetalNodeTypeId               = 0x001279f9,   // 1210873
     AsTextureNodeTypeId             = 0x001279fa,   // 1210874
+
     AsCubeTextureNodeTypeId         = 0x001279fb,   // 1210875
+
     AsTextureInfoNodeTypeId         = 0x001279fc,   // 1210876
     AsCompositeColorNodeTypeId      = 0x001279fd,   // 1210877
     AsSwitchSurfaceNodeTypeId       = 0x001279fe,   // 1210878
@@ -105,15 +133,20 @@ enum AppleseedMayaTypeIds
     AsBumpNodeTypeId                = 0x00127a00,   // 1210880
     AsToonNodeTypeId                = 0x00127a01,   // 1210881
     AsXToonNodeTypeId               = 0x00127a02,   // 1210882
+
     AsFabricNodeTypeId              = 0x00127a03,   // 1210883
+
     AsSbsPbrMaterialNodeTypeId      = 0x00127a04,   // 1210884
     AsManifold2DNodeTypeId          = 0x00127a05,   // 1210885
     AsManifold3DNodeTypeId          = 0x00127a06,   // 1210886
     AsAscCdlNodeTypeId              = 0x00127a07,   // 1210887
     AsInvertColorNodeTypeId         = 0x00127a08,   // 1210888
     AsBlendNormalNodeTypeId         = 0x00127a09,   // 1210889
+	
     AsSurfaceLuminanceNodeTypeId    = 0x00127a0a,   // 1210890
     AsRaySwitchSurfaceNodeTypeId    = 0x00127a0b,   // 1210891
+
+	AsBump2RoughnessNodeTypeId		= 0x00127a0c,	// 1210892
 
     LastTypeId                      = 0x00127a3f    // 1210943
 };
