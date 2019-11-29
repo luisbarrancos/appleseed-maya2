@@ -142,7 +142,7 @@ enum AppleseedMayaTypeIds
     AsAscCdlNodeTypeId              = 0x00127a07,   // 1210887
     AsInvertColorNodeTypeId         = 0x00127a08,   // 1210888
     AsBlendNormalNodeTypeId         = 0x00127a09,   // 1210889
-	
+
     AsSurfaceLuminanceNodeTypeId    = 0x00127a0a,   // 1210890
     AsRaySwitchSurfaceNodeTypeId    = 0x00127a0b,   // 1210891
 
