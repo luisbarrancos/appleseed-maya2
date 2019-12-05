@@ -154,6 +154,18 @@ void ShapeExporter::createObjectInstance(const MString& objectName)
             if (sssSet.length() != 0)
                 params.insert_path("sss_set_id", sssSet.asChar());
         }
+
+        int mediumPriority = 0;
+        if (AttributeUtils::get(node(), "asMediumPriority", mediumPriority))
+            params.insert("medium_priority", mediumPriority);
+
+        bool isPhotonTarget = false;
+        if (AttributeUtils::get(node(), "asIsPhotonTarget", isPhotonTarget))
+            params.insert("photon_target", isPhotonTarget);
+
+        float shadowTerminatorCorrection = 0.0f;
+        if (AttributeUtils::get(node(), "asShadowTerminatorCorrection", shadowTerminatorCorrection))
+            params.insert("shadow_terminator_correction", shadowTerminatorCorrection);
     }
 
     m_objectInstance.reset(
