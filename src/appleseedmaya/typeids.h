@@ -146,7 +146,7 @@ enum AppleseedMayaTypeIds
     AsSurfaceLuminanceNodeTypeId    = 0x00127a0a,   // 1210890
     AsRaySwitchSurfaceNodeTypeId    = 0x00127a0b,   // 1210891
 
-	AsBump2RoughnessNodeTypeId		= 0x00127a0c,	// 1210892
+    AsBump2RoughnessNodeTypeId      = 0x00127a0c,   // 1210892
 
     LastTypeId                      = 0x00127a3f    // 1210943
 };
