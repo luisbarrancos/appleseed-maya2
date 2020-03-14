@@ -54,6 +54,7 @@
 
 // Standard headers.
 #include <cassert>
+#include <cstdint>
 #include <memory>
 
 namespace asf = foundation;
@@ -115,14 +116,19 @@ namespace
             write_tile(frame, tile_x, tile_y);
         }
 
-        void on_progressive_frame_update(const asr::Frame* frame) override
+        void on_progressive_frame_update(
+            const asr::Frame&       frame,
+            const double            time,
+            const std::uint64_t     samples,
+            const double            samples_per_pixel,
+            const std::uint64_t     samples_per_second) override
         {
-            const asf::CanvasProperties& props = frame->image().properties();
+            const asf::CanvasProperties& props = frame.image().properties();
 
             for (size_t ty = 0; ty < props.m_tile_count_y; ++ty)
             {
                 for (size_t tx = 0; tx < props.m_tile_count_x; ++tx)
-                    write_tile(frame, tx, ty);
+                    write_tile(&frame, tx, ty);
             }
         }
 
@@ -266,6 +272,7 @@ namespace
             const size_t        tile_x,
             const size_t        tile_y)
         {
+            assert(frame != nullptr);
             const foundation::Tile& tile = frame->image().tile(tile_x, tile_y);
             assert(tile.get_pixel_format() == foundation::PixelFormatFloat);
             assert(tile.get_channel_count() == 4);
