@@ -38,8 +38,8 @@
 // appleseed.foundation headers.
 #include "foundation/math/matrix.h"
 #include "foundation/utility/api/specializedapiarrays.h"
-#include "foundation/utility/containers/dictionary.h"
-#include "foundation/utility/string.h"
+#include "foundation/containers/dictionary.h"
+#include "foundation/string/string.h"
 
 // appleseed.main headers.
 #include "main/dllvisibility.h"

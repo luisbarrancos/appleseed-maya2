@@ -59,7 +59,7 @@
 #include "foundation/math/matrix.h"
 #include "foundation/math/transform.h"
 #include "foundation/utility/iostreamop.h"
-#include "foundation/utility/string.h"
+#include "foundation/string/string.h"
 
 // Maya headers.
 #include "appleseedmaya/_beginmayaheaders.h"
