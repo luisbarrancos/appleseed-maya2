@@ -96,8 +96,8 @@ namespace
             const asr::Frame*       frame,
             const size_t            tile_x,
             const size_t            tile_y,
-			const size_t			thread_index,
-			const size_t			thread_count) override
+            const size_t            thread_index,
+            const size_t            thread_count) override
         {
             // Temporarily disabled.
             /*

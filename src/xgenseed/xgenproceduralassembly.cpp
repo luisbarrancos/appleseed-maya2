@@ -36,10 +36,10 @@
 #include "renderer/api/scene.h"
 
 // appleseed.foundation headers.
-#include "foundation/math/matrix.h"
-#include "foundation/utility/api/specializedapiarrays.h"
 #include "foundation/containers/dictionary.h"
+#include "foundation/math/matrix.h"
 #include "foundation/string/string.h"
+#include "foundation/utility/api/specializedapiarrays.h"
 
 // appleseed.main headers.
 #include "main/dllvisibility.h"
