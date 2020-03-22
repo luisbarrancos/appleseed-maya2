@@ -26,8 +26,7 @@
 // THE SOFTWARE.
 //
 
-#ifndef APPLESEED_MAYA_ATTRIBUTEUTILS_H
-#define APPLESEED_MAYA_ATTRIBUTEUTILS_H
+#pragma once
 
 // Maya headers.
 #include "appleseedmaya/_beginmayaheaders.h"
@@ -64,7 +63,7 @@ template <typename T>
 MStatus get(const MFnDependencyNode& depNodeFn, const MString& attrName, T& value)
 {
     MStatus status;
-    MPlug plug = depNodeFn.findPlug(attrName, false, &status);
+    MPlug plug = depNodeFn.findPlug(attrName, /*wantNetworkedPlug=*/false, &status);
     if (!status)
         return status;
 
@@ -89,4 +88,3 @@ MStatus makeOutput(MFnAttribute& attr);
 
 } // AttributeUtils.
 
-#endif  // !APPLESEED_MAYA_ATTRIBUTEUTILS_H

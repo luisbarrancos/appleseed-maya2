@@ -26,8 +26,7 @@
 // THE SOFTWARE.
 //
 
-#ifndef APPLESEED_MAYA_SHADINGNODE_H
-#define APPLESEED_MAYA_SHADINGNODE_H
+#pragma once
 
 // Maya headers.
 #include "appleseedmaya/_beginmayaheaders.h"
@@ -52,6 +51,8 @@ class ShadingNode
 
     void postConstructor() override;
 
+    SchedulingType schedulingType() const override;
+
   private:
     static void report_error(
         const OSLShaderInfo&    shaderInfo,
@@ -59,4 +60,3 @@ class ShadingNode
         MStatus&                status);
 };
 
-#endif  // !APPLESEED_MAYA_SHADINGNODE_H
